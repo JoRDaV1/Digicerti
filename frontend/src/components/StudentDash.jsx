@@ -2,7 +2,7 @@ import React, { useState,useEffect} from "react";
 import {useNavigate,Link  } from 'react-router-dom';
 import {ethers} from "ethers";
 import { contractAddress, abi } from "./constants.js";
-
+import Data from "./Data";
  
 
 // import "./AddUser.css";
@@ -93,8 +93,10 @@ function AddCourse(props) {
 
 
   const  createCertificate =  async (savedcourse) =>{
+    const host = Data.URL;
+
     const s = savedcourse._id;
-    const string = `http://20.219.131.253:3000/certificate/${s}`;
+    const string = `${host}/certificate/${s}`;
     const qr =  qrcode(30, 'M');
      qr.addData(string);
      qr.make();
@@ -189,7 +191,8 @@ function AddCourse(props) {
   //Course Array
   const [studentarr, setstudentarr] = useState([]);
 
-  const host = "http://20.219.131.253:5000";
+  const host = Data.URL;
+
 
   // for fetching the courses for a particular issuer
   const token = localStorage.getItem("token");

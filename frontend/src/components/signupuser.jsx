@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
 
-
+import Data from "./Data";
 const theme = createTheme();
 
 
@@ -28,6 +28,8 @@ function SignUpUser() {
   const [ PD, SetPD ] = useState("")
 
   async function postUserDetails(e) {
+    const host = Data.URL;
+
     let Userdetails = {
       Firstname : FN,
       Lastname: LN,
@@ -39,7 +41,7 @@ function SignUpUser() {
 		console.log(Userdetails)
 		e.preventDefault()
  
-      const response = await fetch("http://20.219.131.253:5000/api/auth/createuser", {
+      const response = await fetch(host +"/api/auth/createuser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

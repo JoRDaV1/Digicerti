@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 var fetchuser = require('../Middleware/fetchuser');
 var fetchissuer = require('../Middleware/fetchissuer');
+var fetchcertificate = require('../Middleware/fetchcertificate');
 const Certificate = require('../Models/Certifications');
 const Course = require('../Models/CourseStudents');
 
@@ -322,6 +323,20 @@ router.post('/addcourse', fetchissuer, [
       }
   })
 
+  router.get('/fetchcertificate',fetchcertificate, async (req, res) => {
+        try {
+          courseId = id;
+         const cdetails = await Course.find({_id: courseId})
+           
+              res.json(cdetails)
+           
+        
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).send("Internal Server Error");
+        }
+    })
+  
 
 
     // ROUTE 4: Get All the students using: GET "/api/courses/fetchallstudents". Login required
@@ -423,21 +438,21 @@ router.post('/addstudents', fetchissuer, [
   //   })
     
     
-  //   router.post('/fetchcourse', fetchissuer, [
-  //     body('coursename', 'Enter a valid id').isLength({ min: 1 })
-  //   ],async (req, res) => {
-  //     try {
-  //       const {coursename} = req.body;
+    router.post('/fetchcourse', fetchissuer, [
+      body('coursename', 'Enter a valid id').isLength({ min: 1 })
+    ],async (req, res) => {
+      try {
+        const {coursename} = req.body;
         
-  //       let course = await Course.find({coursename: coursename})
-  //         if (!course) { return res.status(404).send("Not Found") }
+        let course = await Course.find({coursename: coursename})
+          if (!course) { return res.status(404).send("Not Found") }
         
-  //       res.json(course)
+        res.json(course)
 
-  // } catch (error) {
-  //         console.error(error.message);
-  //         res.status(500).send("Internal Server Error");
-  //     }
-  // })
+  } catch (error) {
+          console.error(error.message);
+          res.status(500).send("Internal Server Error");
+      }
+  })
 
 module.exports = router

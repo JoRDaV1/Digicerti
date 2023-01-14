@@ -1,9 +1,10 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import Data from "../Data";
 
 const Dashboard = () => {
 
-  const host = "http://20.219.131.253:5000";
+  const host = Data.URL;
   const [courseArr, setCourseArr] = useState([]);
 
   // for fetching the courses for a particular issuer

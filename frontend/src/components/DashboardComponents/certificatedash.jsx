@@ -1,16 +1,25 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import Formcourse from "../fomCourse"
+import Popup from "../Popup";
 
-
+import {useParams} from "react-router-dom";
 
 const Dashboard = () => {
-  
 
+  const customstyle = {
+    width: "1200px",
+    height:"700px",
+    marginLeft: "80px",
+  };
+  const [buttonPopup, setButtonPopup] = useState(false);
+
+  const {certificateid} = useParams();
+  var imgsrc = "https://ik.imagekit.io/c8sopbrm9/"+ certificateid +".png";
  
   return (
     <div className="col main pt-5 mt-3">
-      <p className="lead d-none d-sm-block">View,Edit and Add Courses</p>
+      <p className="lead d-none d-sm-block">View & Verify your certificate here </p>
       <div className="alert alert-warning fade collapse" role="alert" id="myAlert">
         <button
           type="button"
@@ -25,33 +34,23 @@ const Dashboard = () => {
       </div>
       <div className="row mb-3">
         <div className="col-xl-8 col-sm-6 py-2">
-          <div className="text-right card text-white bg-light h-100">
-            <div className="card-body">
-              <h3 className="text-info text-center ">Welcome</h3>
-              <h5 className="text-info text-center ">to </h5>
-              <h4 className="text-info text-center ">DigiCerti </h4>
-            </div>
-          </div>
+             <img style={customstyle} src={imgsrc}></img>
         </div>
-        <div className="col-xl-3 col-sm-6 py-2" >
-        <a href="#Addcourse">
+        <div className="col-xl-3 col-sm-6 py-2"  style={{ marginTop:"20%"}}>
 
-          <div className="text-right card text-white bg-info h-100">
-            <div className="card-body">
-              <div className="rotate">
-                <h6 className="text-center text-uppercase">
-                  <i
-                    className="text-center fa fa-plus fa-5x"
-                    aria-hidden="true"
-                  ></i>
-                </h6>
-              </div > 
-              <h6 className="text-center text-uppercase"></h6>
-              <h6 className="text-center text-uppercase">Add</h6>
-              <h6 className="text-center text-uppercase">Certifications</h6>
-            </div>
+          <div className="text-right card text-black bg-white h-100" style={{"padding":"10px"}}>
+
+            <h2 style={{"textAlign":"center", "fontSize":"30px", "marginBottom":"30px"}}>Credential Verification</h2>
+         <p style={{"textAlign":"center", "fontSize":"20px"}}>This Certificate now Legitimately belongs to this person  </p>
+         <p style={{"textAlign":"center", "fontSize":"20px"}}> Now, Verify the credentials with Blockchain Transaction</p>
+         <button type="button" class="btn btn-primary btn-lg" onClick={() => setButtonPopup(true)}> Verify & Validate </button>
+          <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+<h2>Verified Succesfully <i class="fa fa-check-square-o" aria-hidden="true"></i>
+</h2> 
+
+
+            </Popup>
           </div>
-          </a>
 
         </div>
     
@@ -59,7 +58,6 @@ const Dashboard = () => {
       <hr />
     
 
-       <Formcourse/>
       
     </div>
   );

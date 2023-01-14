@@ -2,14 +2,14 @@ import React, { useState,useEffect, useRef } from "react";
 import {useNavigate,Link  } from 'react-router-dom';
 // import "./AddUser.css";
 import Popup from "./Popup";
+import { env } from 'process';
 import C1 from '../photos/1.png';
 import C2 from '../photos/2.png';
 import C3 from '../photos/3.png';
 import C4 from '../photos/4.png';
 import C5 from '../photos/5.png';
 import C6 from '../photos/6.png';
-
-
+import Data from "./Data";
 function AddCourse() {
   //popup
   const [buttonPopup, setButtonPopup] = useState(false);
@@ -23,9 +23,11 @@ function AddCourse() {
   //Course Array
   const [courseArr, setCourseArr] = useState([]);
   const [students, setStudents] = useState([]);
+  const rooturl = process.env.REACT_APP_URL_SERVER; 
 
 
-  const host = "http://20.219.131.253:5000";
+  const host = Data.URL;
+  
 
   // for fetching the courses for a particular issuer
   const token = localStorage.getItem("token")
@@ -96,7 +98,7 @@ const Studentslist = async (id) => {
   
 
   return (
-    <div className="wrapper">
+    <div className="col main pt-5 mt-3">
       <div className="row justify-content-center">
         <div className="col-lg-7 col-md-6 col-sm-12">
           <h5 className="mt-3 mb-3 text-center">Courses details</h5>
@@ -147,6 +149,7 @@ const Studentslist = async (id) => {
    
           >
             <label>Course Name</label>
+
             <input
               type="text"
               className="form-control"

@@ -14,7 +14,7 @@ import Menu from "@mui/material/MenuList";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import logincontext from "../context/logincontext";
-
+import Data from "./Data";
 // import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -30,8 +30,12 @@ function Login() {
   const [credentials, setCredentials] = useState({ email: "", password: "", person:""});
 
   const PostloginDetails = async (e) => {
+    const host = Data.URL;
+
     e.preventDefault();
-    const response = await fetch("http://20.219.131.253:5000/api/auth/loginuser", {
+    const response = await fetch(
+      host + "/api/auth/loginuser",
+      {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

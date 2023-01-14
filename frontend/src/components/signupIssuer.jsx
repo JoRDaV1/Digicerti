@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from "react-router-dom";
-
+import Data from "./Data";
 
 const theme = createTheme();
 
@@ -27,6 +27,8 @@ function SignUpIssuer() {
   const [ PD, SetPD ] = useState("")
 
   async function postissuerdetails(e) {
+    const host = Data.URL;
+
     let Userdetails = {
       Companyname: CN,
       Mail : ML,
@@ -37,7 +39,7 @@ function SignUpIssuer() {
     console.log(Userdetails)
 		e.preventDefault()
  
-      const response = await fetch("http://20.219.131.253:5000/api/auth/createissuer", {
+      const response = await fetch(host + "/api/auth/createissuer", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -17,7 +17,6 @@ app.use(express.json())
 // Available Routes
 app.use('/api/auth', require('./routes/auth'))
 
-console.log(myConfig.url);
 
 app.listen(port, () => {
   console.log(`Digicerti backend listening at http://localhost:${port}`)
