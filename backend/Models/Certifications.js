@@ -19,7 +19,9 @@ const CertificationsDB = new mongoose.Schema({
   certificatetype: {
     type: String,
     required: true,
-  },
+  }
+ 
+
 });
 
 module.exports = mongoose.model("Certifications", CertificationsDB);

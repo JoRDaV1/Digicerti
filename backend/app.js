@@ -2,14 +2,14 @@ const express = require('express')
 var cors = require('cors') 
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/SSIPHackathon", {
+mongoose.connect("mongodb+srv://digicerti:jrdv123@digi.ce0yc3q.mongodb.net/?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
 
 const app = express()
-const port = 6000
+const port = 5000
 
 app.use(cors())
 app.use(express.json())
@@ -17,6 +17,7 @@ app.use(express.json())
 // Available Routes
 app.use('/api/auth', require('./routes/auth'))
 
+console.log(myConfig.url);
 
 app.listen(port, () => {
   console.log(`Digicerti backend listening at http://localhost:${port}`)

@@ -1,17 +1,20 @@
 const express = require('express');
-const User = require('../models/User');
-const Issuer = require('../models/Issuer');
+const User = require('../Models/User');
+const Issuer = require('../Models/Issuer');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
-var fetchuser = require('../middleware/fetchuser');
-var fetchissuer = require('../middleware/fetchissuer');
+var fetchuser = require('../Middleware/fetchuser');
+var fetchissuer = require('../Middleware/fetchissuer');
 const Certificate = require('../Models/Certifications');
 const Course = require('../Models/CourseStudents');
 
+// import C1 from './photos/C1.png';
+// const cloudinary = require('cloudinary').v2;
 
 const JWT_SECRET = 'iloveyou';
+// console.log(process.versions.v8);
 
 // ROUTE 1: Create a User using: POST "/api/auth/createuser". No login required
 router.post('/createuser', [
@@ -311,7 +314,7 @@ router.post('/addcourse', fetchissuer, [
 
       const savedcourse = await course.save()
 
-                    res.json(savedcourse)
+      res.json(savedcourse)
 
       } catch (error) {
           console.error(error.message);
@@ -342,6 +345,25 @@ router.get('/fetchallstudents/:id', fetchissuer, async (req, res) => {
 })
 
 // ROUTE 5: Add a Student in a course using: POST "/api/courses/addstudents". Login required
+// Configuration 
+// cloudinary.config({
+//   cloud_name: "dkfjb8xsm",
+//   api_key: "687961213743838",
+//   api_secret: "iTxPxJdfWwCVRZs_6nmo3F4bEG4"
+// });
+
+// cloudinary.uploader.upload(dataURL, {
+//   resource_type: 'image',
+//   public_id: 'my_image_name',
+//   overwrite: true
+//  }, 
+//  function(error, result) { 
+//    console.log(result, error) 
+//  });
+
+
+
+
 
 router.post('/addstudents', fetchissuer, [
     body('coursename', 'Enter a valid title').isLength({ min: 3 }),
@@ -367,8 +389,12 @@ router.post('/addstudents', fetchissuer, [
                 coursename,issueremail,StudentName,StudentEmail,Grade,issuername
             })
             const savedcourse = await course.save()
+            res.json(savedcourse);
+            
+            //  createCertificate(savedcourse);
 
-            res.json(savedcourse)
+
+
 
         } catch (error) {
             console.error(error.message);
@@ -378,40 +404,40 @@ router.post('/addstudents', fetchissuer, [
     // ROUTE 6: fetch a certificate  using: POST "/api/courses/fetchcertificate" with params
 
 
-    router.get('/fetchcertificate/:id', async (req, res) => {
-        try {
+  //   router.get('/fetchcertificate/:id', async (req, res) => {
+  //       try {
 
-            let course = await Course.findById(req.params.id);
+  //           let course = await Course.findById(req.params.id);
 
-              certificategenerate = {
-            "coursename": course.coursename,
-            "issuername": course.issuername,
-            "studentname": course.StudentName,
-          }
-          res.json(certificategenerate)
+  //             certificategenerate = {
+  //           "coursename": course.coursename,
+  //           "issuername": course.issuername,
+  //           "studentname": course.StudentName,
+  //         }
+  //         res.json(certificategenerate)
 
-    } catch (error) {
-            console.error(error.message);
-            res.status(500).send("Internal Server Error");
-        }
-    })
+  //   } catch (error) {
+  //           console.error(error.message);
+  //           res.status(500).send("Internal Server Error");
+  //       }
+  //   })
     
     
-    router.post('/fetchcourse', fetchissuer, [
-      body('coursename', 'Enter a valid id').isLength({ min: 1 })
-    ],async (req, res) => {
-      try {
-        const {coursename} = req.body;
+  //   router.post('/fetchcourse', fetchissuer, [
+  //     body('coursename', 'Enter a valid id').isLength({ min: 1 })
+  //   ],async (req, res) => {
+  //     try {
+  //       const {coursename} = req.body;
         
-        let course = await Course.find({coursename: coursename})
-          if (!course) { return res.status(404).send("Not Found") }
+  //       let course = await Course.find({coursename: coursename})
+  //         if (!course) { return res.status(404).send("Not Found") }
         
-        res.json(course)
+  //       res.json(course)
 
-  } catch (error) {
-          console.error(error.message);
-          res.status(500).send("Internal Server Error");
-      }
-  })
+  // } catch (error) {
+  //         console.error(error.message);
+  //         res.status(500).send("Internal Server Error");
+  //     }
+  // })
 
 module.exports = router

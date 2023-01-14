@@ -25,7 +25,7 @@ function AddCourse() {
   const [students, setStudents] = useState([]);
 
 
-  const host = "http://localhost:5000";
+  const host = "http://20.219.131.253:5000";
 
   // for fetching the courses for a particular issuer
   const token = localStorage.getItem("token")

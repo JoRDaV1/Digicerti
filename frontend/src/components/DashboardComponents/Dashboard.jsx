@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 const Dashboard = () => {
 
-  const host = "http://localhost:5000";
+  const host = "http://20.219.131.253:5000";
   const [courseArr, setCourseArr] = useState([]);
 
   // for fetching the courses for a particular issuer

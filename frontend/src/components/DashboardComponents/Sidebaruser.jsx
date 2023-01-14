@@ -3,7 +3,7 @@ import{ useEffect,useState } from "react";
 
 const Sidebar = () => {
   const token = localStorage.getItem("token")
-  const host = "http://localhost:5000";
+  const host = "http://20.219.131.253:5000";
 
   const [name, setname] = useState("");
 

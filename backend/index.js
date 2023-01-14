@@ -1,229 +1,213 @@
-const express = require("express")
-const app = express()
-const port = 4000
-const cors = require("cors")
-const mongoose = require("mongoose");
-const md5 = require("md5");
-const jwt = require("jsonwebtoken");
-const JWT_TOKEN  = "iloveyou";
-var fetchuser = require("./Middleware/fetchuser");
+import React from "react";
 
+function Project(props) {
+  return (
+    <div className="Project">
+      <h3>
+        {" "}
+        <u> My Projects </u>
+      </h3>
 
-Userfound = 0
+      <div className="rcornersforProjectoutside">
+      <div className="rcornersforProject">
+          <div class="worksContainer sectionContainer">
+            <article class="workBox">
+              <div class="workImageContainer">
+                <img
+                  src="https://i.ibb.co/RyLFZfT/gaivi.jpg"
+                  alt="Capture"
+                  border="0"
+                />{" "}
+              </div>
+              <div class="workDescribeContainer">
+                <h3>Grocery Store</h3>
+                <h4>
+                  Technologies Used: <span class="techStack">Node JS</span>,{" "}
+                  <span class="techStack">MongoDB</span>,{" "}
+                  <span class="techStack">EJS</span>
+                </h4>
+                <ul>
+                  <li>Completely built with Node JS and MongoDB </li>
+                  <li>User can login and buy example products</li>
 
-mongoose.connect("mongodb://localhost:27017/SSIPHackathon", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+                  <li>
+                    They can add items to their cart and checkout 
+                  </li>
+  <li>
+                    Whenever user clicks on add to cart the product is added to db and display the total in checkout
+                  </li>
+                </ul>
+                <div class="workLinks">
+                  <a
+                    href="https://gaivi-grocery.herokuapp.com/"
+                    class="liveLink"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Live
+                  </a>
+                  <a
+                    href="https://github.com/Vswaroop04/grocery-system"
+                    class="repoLink"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Repo
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div className="rcornersforProject">
+          <div class="worksContainer sectionContainer">
+            <article class="workBox">
+              <div class="workImageContainer">
+                <img
+                  src="https://i.ibb.co/V9y2pmJ/Capture.png"
+                  alt="Capture"
+                  border="0"
+                />{" "}
+              </div>
+              <div class="workDescribeContainer">
+                <h3>Chat Application</h3>
+                <h4>
+                  Technologies Used: <span class="techStack">Node JS</span>,{" "}
+                  <span class="techStack">Express</span>,{" "}
+                  <span class="techStack">Socket</span>
+                </h4>
+                <ul>
+                  <li>Completely built with Sockets Requests </li>
+                  <li>A specific Room Will Be Created For Chatting</li>
+                  <li>
+                    Real-time Messaging and Users can Send Their Location too
+                  </li>
+                </ul>
+                <div class="workLinks">
+                  <a
+                    href="https://safe-coast-70363.herokuapp.com/"
+                    class="liveLink"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Live
+                  </a>
+                  <a
+                    href="https://github.com/Vswaroop04/Chat-Application-Using-NodeJs"
+                    class="repoLink"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Repo
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
 
+        {/* 2 */}
+        <div className="rcornersforProject">
+          <div class="worksContainer sectionContainer">
+            <article class="workBox">
+              <div class="workImageContainer">
+                <img
+                  src="https://i.ibb.co/wWwr0Sr/Capture.png"
+                  alt="Capture"
+                  border="0"
+                />{" "}
+              </div>
+              <div class="workDescribeContainer">
+                <h3>Blog Website</h3>
+                <h4>
+                  Technologies Used: <span class="techStack">Node Js</span>,{" "}
+                  <span class="techStack">REST API</span>,{" "}
+                  <span class="techStack">Express</span>
+                </h4>
+                <ul>
+                  <li>Completely built with Api Get,Post Requests</li>
+                  <li>
+                    Using Mailchimp Api provider We Can Check the Customer
+                    Details
+                  </li>
+                  <li>
+                    Customer Can Subscribe and Unsubscribe From the Services
+                  </li>
+                </ul>
+                <div class="workLinks">
+                  <a
+                    href="https://floating-wildwood-49118.herokuapp.com/"
+                    class="liveLink"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Live
+                  </a>
+                  <a
+                    href="https://github.com/Vswaroop04/News-Letter-Sign-up"
+                    class="repoLink"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Repo
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
 
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
-app.use(cors())
+        {/* 3 */}
+        <div className="rcornersforProject">
+          <div class="worksContainer sectionContainer">
+            <article class="workBox">
+              <div class="workImageContainer">
+                <img
+                  src="https://i.ibb.co/fCSdJK3/Capture.png"
+                  alt="Capture"
+                  border="0"
+                />{" "}
+              </div>
+              <div class="workDescribeContainer">
+                <h3>VINKS - Movie Ticket Booking System</h3>
+                <h4>
+                  Technologies Used: <span class="techStack">NodeJS</span>,{" "}
+                  <span class="techStack">MYSQL</span>,{" "}
+                  <span class="techStack">EJS</span>
+                </h4>
+                <ul>
+                  <li>This Was Built using NodeJS Express Routes</li>
+                  <li>The Movie Details Are Fetched From MySql Db</li>
+                  <li>
+                    Real-time Data Passes through MYsqlDB -- NodeJS -- Ejs
+                    Template
+                  </li>
+                </ul>
+                <div class="workLinks">
+                  <a
+                    href="/"
+                    class="liveLink"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Live
+                  </a>
+                  <a
+                    href="https://github.com/Vswaroop04/Movie-Booking-System"
+                    class="repoLink"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Repo
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-
-
-// app.use('/api/authuser', require('./routes/authuser'))
-// app.use('api/authissuer', require('./routes/authissuer'))
-// app.use('/api/certifications', require('./routes/certifications'))
-
-
-const User = require("./Models/User")
-
-
-const Issuer = require("./Models/Issuer")
-
-
-
-
-
-app.get("/", cors(), async (req, res) => {
-	res.send("This is working")
-})
-app.get("/home", cors(), async (req, res) => {
-        if(Userfound){
-            res.send("welcome")
-        }
-    
-})
-app.post("/post_login", async (req, res) => {
-    let  name = req.body
-	str = JSON.stringify(name);
-    data = JSON.parse(str);
-    console.log(data)
-    if(data.Userdetails.Person == 10){
-        User.findOne({email:data.Userdetails.Mail},function(err,data2){
-            if(data2){
-            if(data2.password==md5(data.Userdetails.Password)) {
-                const rawdata = {
-                    user : {
-                       email: data2.Mail,
-                       password: data2.password
-                    }
-                    }
-                
-                    const authtoken = jwt.sign(rawdata,JWT_TOKEN);
-console.log(authtoken)
-                console.log("Userfound")
-               Userfound = 1;
-            }
-            else{
-                res.send("Password Not Matched")
-            }
-            }
-            else{
-                res.send("Email Not Registered")
-            }
-            
-            
-                })
-    }
-    
-   else if(data.Userdetails.Person == 20){
-        Issuer.findOne({email:data.Userdetails.Mail},function(err,data2){
-            if(data2){
-                if(data2.password==md5(data.Userdetails.Password)) {
-                    const rawdata = {
-                        user : {
-                            name: data2.id
-                        }
-                        }
-                    
-                        const authtoken = jwt.sign(rawdata,JWT_TOKEN);
-    
-                        console.log(authtoken)
-                        res.send("Issuerfound")
-                }
-                else{
-                    res.send("Password Not Matched")
-                }
-                }
-                else{
-                    res.send("Email Not Registered")
-                }
-        })
-    }
-
-    else{
-        res.send("Please Select if u are either User or Issuer")
-    }
-
-// res.redirect("/home")
-})
-
-app.post("/post_user", async (req, res) => {
-	let  name = req.body
-	str = JSON.stringify(name);
-    data = JSON.parse(str);
-    console.log(data);
-    hashedpwd=md5(data.Userdetails.Password)
-  
-    User.findOne({email:data.Userdetails.Mail},function(err,data2){
-        if(!data2){
-            var c;
-            User.findOne({},function(err,data2){
-
-                if (data2) {
-                    console.log("if");
-                    c = data.unique_id + 1;
-                }else{
-                    c=1;
-                }
-
-                var user = new User({
-                    fname: data.Userdetails.Firstname,
-                    lname: data.Userdetails.Lastname,
-                    email: data.Userdetails.Mail,
-                    mobile:data.Userdetails.Mobilenumber,
-                    password:hashedpwd,
-                    // noofcertifications:9
-                });
-                const rawdata = {
-                    user : {
-                        id: user.id
-                    }
-                    }
-                
-                    const authtoken = jwt.sign(rawdata,JWT_TOKEN);
-
-                    console.log(authtoken)
-                   
-
-                user.save(function(err, Person){
-                    if(err)
-                        console.log(err);
-                    else
-                        console.log('Success');
-                });
-
-            }).sort({_id: -1}).limit(1);
-            console.log({"Success":"You are regestered,You can login now."});
-        }else{
-            console.log({"failure":"Email is already used."});
-        }
-
-    });
-	
-
-  
-
-})
-
-
-
-app.post("/post_issuer", async (req, res) => {
-	let  name = req.body
-	str = JSON.stringify(name);
-    data = JSON.parse(str);
-    console.log(data);
-    hashedpwd=md5(data.Userdetails.Password)
-        Issuer.findOne({email:data.Userdetails.Mail},function(err,data2){
-            if(!data2){
-                var c;
-                Issuer.findOne({},function(err,data2){
-
-                    if (data2) {
-                        console.log("if");
-                        c = data.unique_id + 1;
-                    }else{
-                        c=1;
-                    }
-                    var issuer = new Issuer({
-                        name: data.Userdetails.Companyname,
-                        email: data.Userdetails.Mail,
-                        mobile:data.Userdetails.Mobilenumber,
-                        password:hashedpwd
-                    });
-
-                    issuer.save(function(err, Person){
-                        if(err)
-                            console.log(err);
-                        else
-                            console.log('Success');
-                    });
-
-                }).sort({_id: -1}).limit(1);
-                console.log({"Success":"You are regestered,You can login now."});
-            }else{
-                console.log({"failure":"Email is already used."});
-            }
-
-        });
-    
-	
-})
-
-app.post('/getuser',fetchuser,  async (req, res) => {
-    try {
-      userId = req.user.id;
-      const user = await User.findById(userId).select("-password")
-console.log(user)
-    } catch (error) {
-      console.error(error.message);
-      res.status(500).send("Internal Server Error");
-    }
-  })
-
-app.listen(port, () => {
-	console.log(`Listening at http://localhost:${port}`)
-})
+export default Project;

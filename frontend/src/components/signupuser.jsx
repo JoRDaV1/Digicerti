@@ -39,7 +39,7 @@ function SignUpUser() {
 		console.log(Userdetails)
 		e.preventDefault()
  
-      const response = await fetch("http://localhost:5000/api/auth/createuser", {
+      const response = await fetch("http://20.219.131.253:5000/api/auth/createuser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

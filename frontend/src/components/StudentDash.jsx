@@ -1,7 +1,11 @@
 import React, { useState,useEffect} from "react";
 import {useNavigate,Link  } from 'react-router-dom';
-// import "./AddUser.css";
+import {ethers} from "ethers";
+import { contractAddress, abi } from "./constants.js";
 
+ 
+
+// import "./AddUser.css";
 import Popup from "./Popup";
 import C1 from '../photos/1.png';
 import C2 from '../photos/2.png';
@@ -9,6 +13,33 @@ import C3 from '../photos/3.png';
 import C4 from '../photos/4.png';
 import C5 from '../photos/5.png';
 import C6 from '../photos/6.png';
+// const ObjectId = require('mongodb').ObjectID;
+const qrcode = require('qrcode-generator');
+// const cloudinary = require('cloudinary').v2;
+// cloudinary.config({
+//   cloud_name: "dkfjb8xsm",
+//   api_key: "687961213743838",
+//   api_secret: "iTxPxJdfWwCVRZs_6nmo3F4bEG4"
+// });
+// SDK initialization
+
+var ImageKit = require("imagekit");
+
+
+
+// //  using imagekit sdk ref- https://imagekit.io/dashboard/developer/api-keys
+var imagekit = new ImageKit({
+    publicKey : "public_ka1/kAxhk07Ei8C1sCVfKZyly8s=",
+    privateKey : "private_uL/R+P7HQpH28Bcp+FY/Na6/ZgE=",
+    urlEndpoint : "https://ik.imagekit.io/c8sopbrm9"
+});
+
+
+
+
+
+
+
 
 
 function AddCourse(props) {
@@ -16,17 +47,152 @@ function AddCourse(props) {
   const [buttonPopup, setButtonPopup] = useState(false);
   const [value, SetValue] = useState("");
   const coursename = props.name
-  console.log(coursename)
+  // console.log(coursename)
   let navigate = useNavigate();
+
+
+  async function addToBlock(savedcourse) {
+    const provider = new ethers.providers.JsonRpcProvider(
+      "https://eth-goerli.g.alchemy.com/v2/VEw1hpMEy-H73clO7nSPgqNRtQNiiJmQ"
+    );
+    const signer = new ethers.Wallet(
+      "9a136393ff73cb168ab97cd8dc7e95a7099d01b13cdcd9907a03f31395e8dda2",
+      provider
+    );
+
+    const contract = new ethers.Contract(contractAddress, abi, signer);
+
+    try {
+      const transactionResponse = await contract.addCertificate(
+        savedcourse._id,
+        savedcourse.StudentName,
+        savedcourse.issuername,
+        savedcourse.coursename,
+        savedcourse.Date
+      );
+      await listenForTransactionMine(transactionResponse, provider);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function listenForTransactionMine(transactionResponse, provider) {
+    console.log(`Mining ${transactionResponse.hash}`);
+
+    return new Promise((resolve, revert) => {
+      try {
+        provider.once(transactionResponse.hash, (transactionReciept) => {
+          console.log(`Added to Blockchain`);
+        });
+        resolve();
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  }
+
+
+  const  createCertificate =  async (savedcourse) =>{
+    const s = savedcourse._id;
+    const string = `http://20.219.131.253:3000/certificate/${s}`;
+    const qr =  qrcode(30, 'M');
+     qr.addData(string);
+     qr.make();
+    
+    
+    const parser = new DOMParser();
+    const imgTag =  qr.createImgTag();
+    const htmlDoc =  parser.parseFromString(imgTag, 'text/html');
+    const qrsrc =  htmlDoc.querySelector('img').getAttribute("src")
+    console.log(qrsrc);
+    
+    
+      
+    
+    var canvas = document.createElement('canvas'); 
+    var ctx = canvas.getContext('2d');
+    
+    var img  = await loadImage(C1);
+    
+    var pngImage = new Image();
+    pngImage.src = img.src;
+    // load the PNG image
+    
+    
+    pngImage.onload = function() {
+        // draw the PNG image on the canvas
+        canvas.width = pngImage.naturalWidth;
+        canvas.height = pngImage.naturalHeight ;
+        console.log(canvas.width);
+        console.log(canvas.height);
+        console.log(pngImage.width);
+        console.log(pngImage.height);
+        ctx.drawImage(pngImage, 0, 0);
+        // load the GIF image
+        var dataURL = canvas.toDataURL('image/png');
+            
+        // console.log(dataURL);
+    
+        var gifImage = new Image();
+        gifImage.src = qrsrc; 
+    
+        // console.log(gifImage.width);
+        // console.log(gifImage.height);
+        ctx.font = '48px serif';
+        ctx.fillStyle = 'red';
+        ctx.fillText(savedcourse.StudentName, 900, 790);
+        ctx.fillText(savedcourse.coursename, 900, 1000);
+        ctx.fillText(savedcourse.issuername, 900, 1180);
+        ctx.fillText(savedcourse.Date, 900, 1320);
+    
+    
+        gifImage.onload =   function() {
+            // draw the GIF image on the canvas, on top of the PNG image
+            ctx.drawImage(gifImage, 90, 900);
+    
+            // save the resulting image as a PNG
+            var dataURL = canvas.toDataURL('image/png');
+            
+            console.log(dataURL);
+            // cloudinary.uploader.upload(dataURL, {
+            //   resource_type: 'image',
+            //   public_id: 'my_image_name',
+            //   overwrite: true
+            //  }, 
+            //  function(error, result) { 
+            //    console.log(result, error) 
+            //  });
+
+             imagekit.upload({
+              file: dataURL,
+              fileName: `${savedcourse._id}.png`,
+              useUniqueFileName: false,
+              isBase64: true,
+              fileType: "image/png"
+            },
+            function(error, result) {
+              console.log(result, error);
+            }
+          );
+            
+    
+        };
+    }; 
+    
+    addToBlock(savedcourse);
+  
+  }
+
+
 
 
   //Course Array
   const [studentarr, setstudentarr] = useState([]);
 
-  const host = "http://localhost:5000";
+  const host = "http://20.219.131.253:5000";
 
   // for fetching the courses for a particular issuer
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
 
@@ -55,7 +221,20 @@ function AddCourse(props) {
 
 
   // for adding the course data to db
+  // const objid = new ObjectId(); 
+// create a canvas element
 
+
+// var needsrc = "";
+
+
+
+
+function loadImage(url) {
+  return new Promise(r => { let i = new Image(); i.onload = (() => r(i)); i.src = url; });
+}
+
+  // let s ="";
   const addstudents = async ( StudentName, StudentEmail ,Grade, coursename) => {
     const response = await fetch(`${host}/api/auth/addstudents`, {
       method: "POST",
@@ -66,9 +245,19 @@ function AddCourse(props) {
       body: JSON.stringify({ StudentName, StudentEmail ,Grade, coursename }),
     });
 
-    const course = response.json();
+    const course =  await response.json();
+   
+      // s = course._id;
+      // console.log(s);
+
+
     setstudentarr(studentarr.concat(course));
+    createCertificate(course);
+
   };
+
+
+
   const [note, setNote] = useState({StudentName:"", StudentEmail:"" ,Grade:""})
 
     const handleClick = (e)=>{
@@ -86,6 +275,8 @@ function AddCourse(props) {
 
   return (
     <div className="wrapper">
+{/* <img src="https://ik.imagekit.io/c8sopbrm9/63c269ec0ec084e8d2291794.png" alt="logo" className="logo" /> */}
+
       <div className="row justify-content-center">
         <div className="col-lg-7 col-md-6 col-sm-12">
           <h5 className="mt-3 mb-3 text-center">Students details</h5>
@@ -127,7 +318,7 @@ function AddCourse(props) {
 <hr />
        <div className="main" style={{textalign:"center"}} >
        <h4 className="text-center" id="Addcourse">Add Student</h4>
-
+              {/* <img src={needsrc}/> */}
          <div className="form-container">
              <form
             autoComplete="off"
@@ -176,155 +367,3 @@ function AddCourse(props) {
 }
 
 export default AddCourse;
-
-
-// import React, { useState,useEffect, useRef } from "react";
-// // import "./AddUser.css";
-// import Popup from "./Popup";
-// import C1 from '../photos/1.png';
-// import C2 from '../photos/2.png';
-// import C3 from '../photos/3.png';
-// import C4 from '../photos/4.png';
-// import C5 from '../photos/5.png';
-// import C6 from '../photos/6.png';
-// import {useParams} from "react-router-dom";
-
-
-// function AddStudents() {
-//   //popup
-//   const {courseID} = useParams();
-// console.log(courseID);
-//   // for fetching the students for a particular course
-//   const [students, setStudents] = useState([]);
-
-//   const [coursename, setCoursename] = useState("")
-  
-//   const host = "http://localhost:5000";
-//   const token = localStorage.getItem("token")
-
-//   useEffect(() => {
-
-// const Studentslist = async () => {
-//   // API Call
-//   const response = await fetch(`${host}/api/auth/fetchcourse`, {
-//     method: 'GET',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       "auth-token":  token
-//     },
-//           body: JSON.stringify({courseID}),
-
-//   });
-//   const newStudents = await response.json(); 
-//   setStudents(newStudents)
-//   console.log(students)
-// }
-// Studentslist();
-// }, [students])
- 
-// setCoursename(students.courseName)
-
-//   // for adding the student data to db
-
-//   const addstudents = async (StudentName,StudentEmail,Grade) => {
-//     const response = await fetch(`${host}/api/auth/addstudents`, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//           "auth-token":  token
-//       },
-//       body: JSON.stringify({ coursename,StudentName,StudentEmail,Grade}),
-//     });
-
-//     const course = response.json();
-//     setStudents(students.concat(course));
-//   };
-
-
-//   return (
-//     <div className="wrapper">
-//       <div className="row justify-content-center">
-//         <div className="col-lg-7 col-md-6 col-sm-12">
-//           <h5 className="mt-3 mb-3 text-center">Student Details</h5>
-
-//           <div className="table-responsive">
-        
-//             <table className="css-serial table table-striped"   >
-//               <thead className="thead-light">
-//                 <tr>
-//                 <th>S no</th>
-//                   <th>Course name</th>
-//                   <th>Instructorname</th>
-//                   <th>Certificate type</th>
-//                 </tr>
-//               </thead>
-//               <tbody>
-//                 {students.map((output) => (
-//                   <tr>
-//                     <td></td>
-//                     <td>{output.coursename}</td>
-//                     <td>{output.issuername}</td>
-//                     <td>{output.certificatetype}</td>
-//                     <td>
-//                       <button>View Certificate</button>
-//                     </td>
-//                   </tr>
-//                 ))}
-//               </tbody>
-//             </table>
-//           </div>
-
-//         </div>
-//       </div>
-// <br />
-// <hr />
-
-//       <div className="main" style={{textalign:"center"}} >
-//       <h4 className="text-center" id="Addcourse">Add Student</h4>
-
-//         <div className="form-container">
-//           <form
-//             autoComplete="off"
-//             className="form-group"
-   
-//           >
-//             <label>StudentName</label>
-//             <input
-//               type="text"
-//               className="form-control"
-//               name="StudentName" aria-describedby="emailHelp" value={note.StudentName} onChange={onChange} minLength={5} required
-//             ></input>
-//             <label>StudentEmail</label>
-//             <input
-//               type="text"
-//               className="form-control"
-//               name="StudentEmail" aria-describedby="emailHelp" value={note.StudentEmail} onChange={onChange} minLength={5} required
-//             ></input>
-//                                   <label>Grade</label>
-
-//                        <input
-//               type="text"
-//               className="form-control"
-//               name="Grade" aria-describedby="emailHelp" value={note.Grade} onChange={onChange} minLength={5} required
-//             ></input>
-//             <br />
-         
-//             <div className="row">
-         
-//               <div className="column">
-//                 <button type="submit" className="btn btn-secondary"  onClick={handleClick}>
-//                   Submit
-
-//                 </button>
-//               </div>
-//             </div>
-//           </form>
-//         </div>
-
-//         {/* rendering form  */}
-//       </div>
-//     </div>
-//   );
-// }
-// export default AddStudents;
-          

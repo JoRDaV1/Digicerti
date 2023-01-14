@@ -25,6 +25,15 @@ const studentslistDB = new mongoose.Schema({
     certificatetype: {
         type: Number,
       },
+      Date:{
+        type: Date,
+        default: Date.now
+      }
+      ,
+      img: {
+        type: String,
+        default :"image"
+      }
    
 });
 
