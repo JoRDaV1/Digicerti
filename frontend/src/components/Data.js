@@ -1,6 +1,6 @@
 const DATA = {    
     
-    URL: 'http://localhost:5000'
+    URL: 'http://20.219.131.253:5000'
 
 }
 
