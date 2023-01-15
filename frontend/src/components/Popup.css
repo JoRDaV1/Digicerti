@@ -22,6 +22,7 @@
 .popup-inner .close-btn {
     position: absolute;
 left: 90%;    font-size: 20px;
+    font-weight: bold;
     cursor: pointer;
 }
 .row {
@@ -63,7 +64,7 @@ margin-left: 20px;  }
 }
  
   .btn1:hover {
-    background-color: #898989; /* Green */
+    background-color: #358bf4; /* Green */
     color: white;
   }
 
@@ -71,7 +72,7 @@ margin-left: 20px;  }
     background-color: #3e8e41;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
-  }
+  }     
 
   .bs {
     background-color: salmon;

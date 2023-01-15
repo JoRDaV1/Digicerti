@@ -36,13 +36,24 @@ var imagekit = new ImageKit({
 
 
 
-
-
-
-
-
-
 function AddCourse(props) {
+
+  const postblock = async (blockdetails,studentarr) => {
+
+    const response = await fetch(
+      `${host}/api/auth/blockinfo`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },  
+        body: JSON.stringify({blockdetails,studentarr}),
+      
+      }
+    );
+    const responseofpostblock = await response.json();
+    console.log(responseofpostblock)
+  };
   //popup
   const [buttonPopup, setButtonPopup] = useState(false);
   const [value, SetValue] = useState("");
@@ -55,8 +66,9 @@ function AddCourse(props) {
     const provider = new ethers.providers.JsonRpcProvider(
       "https://eth-goerli.g.alchemy.com/v2/VEw1hpMEy-H73clO7nSPgqNRtQNiiJmQ"
     );
+    console.log(Data.pvtkey)
     const signer = new ethers.Wallet(
-      "9a136393ff73cb168ab97cd8dc7e95a7099d01b13cdcd9907a03f31395e8dda2",
+      Data.pvtkey,
       provider
     );
 
@@ -70,13 +82,15 @@ function AddCourse(props) {
         savedcourse.coursename,
         savedcourse.Date
       );
-      await listenForTransactionMine(transactionResponse, provider);
+      await listenForTransactionMine(transactionResponse, provider, savedcourse);
     } catch (error) {
       console.log(error);
     }
   }
 
-  function listenForTransactionMine(transactionResponse, provider) {
+  function listenForTransactionMine(transactionResponse, provider, savedcourse) {
+    console.log(transactionResponse);
+    postblock(transactionResponse,savedcourse)
     console.log(`Mining ${transactionResponse.hash}`);
 
     return new Promise((resolve, revert) => {
@@ -131,7 +145,7 @@ function AddCourse(props) {
         console.log(pngImage.height);
         ctx.drawImage(pngImage, 0, 0);
         // load the GIF image
-        var dataURL = canvas.toDataURL('image/png');
+        // var dataURL = canvas.toDataURL('image/png');
             
         // console.log(dataURL);
     
@@ -155,7 +169,7 @@ function AddCourse(props) {
             // save the resulting image as a PNG
             var dataURL = canvas.toDataURL('image/png');
             
-            console.log(dataURL);
+            // console.log(dataURL);
             // cloudinary.uploader.upload(dataURL, {
             //   resource_type: 'image',
             //   public_id: 'my_image_name',
@@ -172,8 +186,9 @@ function AddCourse(props) {
               isBase64: true,
               fileType: "image/png"
             },
+            
             function(error, result) {
-              console.log(result, error);
+              console.log(error, result);
             }
           );
             

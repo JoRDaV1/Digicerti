@@ -10,6 +10,7 @@ var fetchissuer = require('../Middleware/fetchissuer');
 var fetchcertificate = require('../Middleware/fetchcertificate');
 const Certificate = require('../Models/Certifications');
 const Course = require('../Models/CourseStudents');
+const Blockinfo = require('../Models/blockinfo');
 
 // import C1 from './photos/C1.png';
 // const cloudinary = require('cloudinary').v2;
@@ -323,6 +324,40 @@ router.post('/addcourse', fetchissuer, [
       }
   })
 
+  router.post('/blockinfo', [
+    // body('id', 'Enter a valid title').isLength({ min: 5}),
+    // body('blocknumber', 'Description must be atleast 5 characters').isLength({ min: 0 }),
+    // body('blockhash', 'Select a specific certificate').isLength({ min: 0 })
+  ], async (req, res) => {
+        try {
+         
+     
+  
+            // const { id, blocknumber, blockhash } = req.body;
+  console.log(req.body)
+  console.log(req.body)
+            // If there are errors, return Bad request and the errors
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
+         
+  
+          const block = new Blockinfo({
+            id, blocknumber, blockhash
+        })
+  
+        const savedblock = await block.save()
+  
+        res.json(savedblock)
+  
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).send("Internal Server Error");
+        }
+    })
+  
+
   router.get('/fetchcertificate',fetchcertificate, async (req, res) => {
         try {
           courseId = id;
@@ -336,6 +371,21 @@ router.post('/addcourse', fetchissuer, [
             res.status(500).send("Internal Server Error");
         }
     })
+
+    router.get('/fetchthecertificate',fetchcertificate, async (req, res) => {
+      try {
+        courseId = id;
+       const cdetails = await Course.findById(courseId)
+         
+            res.json(cdetails)
+         
+      
+      } catch (error) {
+          console.error(error.message);
+          res.status(500).send("Internal Server Error");
+      }
+  })
+
   
 
 

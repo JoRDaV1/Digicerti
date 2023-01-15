@@ -31,7 +31,6 @@ useEffect(() => {
   );
   const completeCourseDetails = await response.json();
   setCourseArr(completeCourseDetails);
-  console.log(courseArr)
 };
  loadCertificate(certificateid);
 }, [courseArr])
