@@ -43,7 +43,7 @@ const Dashboard = () => {
 
     async function verifyCertificate(savedcourse) {
       const provider = new ethers.providers.JsonRpcProvider(
-        "https://eth-goerli.g.alchemy.com/v2/VEw1hpMEy-H73clO7nSPgqNRtQNiiJmQ"
+        "https://polygon-mumbai.g.alchemy.com/v2/PU-00iMyzujjZKf0k72eIFJ4a7zCHYUW"
       );
       const contract = new ethers.Contract(contractAddress, abi, provider);
       const id = savedcourse._id;
