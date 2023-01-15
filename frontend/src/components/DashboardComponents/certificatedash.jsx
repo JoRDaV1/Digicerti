@@ -113,6 +113,8 @@ const Dashboard = () => {
             className="text-right card text-black bg-white h-100"
             style={{ padding: "10px" }}
           >
+            {/* add a line break */}
+            {/* <br /> */}
             <h2
               style={{
                 textAlign: "center",

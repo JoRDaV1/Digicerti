@@ -16,6 +16,7 @@ const App = () => {
   const date = Moment().format("DD-MM-YYYY");
   const [date1,setDate1] = useState(date);
   const [org, setOrg] = useState("Blockchain Academy");
+  const [id, setId] = useState("");
 
 
 
@@ -37,6 +38,7 @@ const App = () => {
       setCourse(data.coursename);
       setOrg(data.issuername);
       setDate1(data.date);
+      setId(data._id);
     }
     
     stddetails();
@@ -66,7 +68,7 @@ const App = () => {
           </div>
 
           <div>
-            <img src="https://i.ibb.co/TL4RCj5/1.png" alt="1" border="0"/>
+            <img src={`https://ik.imagekit.io/c8sopbrm9/tr:n-ik_ml_thumbnail/${id}.png`} alt="1" border="0"/>
           </div>
         </div>
       </div>

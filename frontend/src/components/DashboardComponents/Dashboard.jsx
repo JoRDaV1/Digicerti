@@ -76,7 +76,7 @@ const Dashboard = () => {
                <div className="card card-inverse card-success text-center">
                <div className="card-body">
                  <blockquote className="card-blockquote">
-                         <img src="https://i.ibb.co/TL4RCj5/1.png" alt="1" border="0" style={{width:'450px'}} />
+                         <img src={`https://ik.imagekit.io/c8sopbrm9/tr:n-ik_ml_thumbnail/${output._id}.png`} alt="1" border="0" style={{width:'450px'}} />
         
                 <footer>
                   <cite>

@@ -14,7 +14,7 @@ import C4 from '../photos/4.png';
 import C5 from '../photos/5.png';
 import C6 from '../photos/6.png';
 // const ObjectId = require('mongodb').ObjectID;
-const qrcode = require('qrcode-generator');
+// const qrcode = require('qrcode-generator');
 // const cloudinary = require('cloudinary').v2;
 // cloudinary.config({
 //   cloud_name: "dkfjb8xsm",
@@ -22,6 +22,8 @@ const qrcode = require('qrcode-generator');
 //   api_secret: "iTxPxJdfWwCVRZs_6nmo3F4bEG4"
 // });
 // SDK initialization
+const qr = require('qr-image');
+
 
 var ImageKit = require("imagekit");
 
@@ -107,19 +109,12 @@ function AddCourse(props) {
 
 
   const  createCertificate =  async (savedcourse) =>{
-    const host = Data.URL;
+    const host = "http://digicerti.centralindia.cloudapp.azure.com:3000/";
 
     const s = savedcourse._id;
     const string = `${host}/certificate/${s}`;
-    const qr =  qrcode(30, 'M');
-     qr.addData(string);
-     qr.make();
-    
-    
-    const parser = new DOMParser();
-    const imgTag =  qr.createImgTag();
-    const htmlDoc =  parser.parseFromString(imgTag, 'text/html');
-    const qrsrc =  htmlDoc.querySelector('img').getAttribute("src")
+    const qr_code = qr.imageSync(string, { type: 'png' });
+    const qrsrc = `data:image/png;base64,${qr_code.toString('base64')}`;
     console.log(qrsrc);
     
     
@@ -149,11 +144,11 @@ function AddCourse(props) {
             
         // console.log(dataURL);
     
-        var gifImage = new Image();
-        gifImage.src = qrsrc; 
+        var qrimage = new Image();
+        qrimage.src = qrsrc; 
     
-        // console.log(gifImage.width);
-        // console.log(gifImage.height);
+        // console.log(qrimage.width);
+        // console.log(qrimage.height);
         ctx.font = '48px serif';
         ctx.fillStyle = 'red';
         ctx.fillText(savedcourse.StudentName, 900, 790);
@@ -162,22 +157,13 @@ function AddCourse(props) {
         ctx.fillText(savedcourse.Date, 900, 1320);
     
     
-        gifImage.onload =   function() {
+        qrimage.onload =   function() {
             // draw the GIF image on the canvas, on top of the PNG image
-            ctx.drawImage(gifImage, 90, 900);
+            ctx.drawImage(qrimage, 90, 900);
     
             // save the resulting image as a PNG
             var dataURL = canvas.toDataURL('image/png');
             
-            // console.log(dataURL);
-            // cloudinary.uploader.upload(dataURL, {
-            //   resource_type: 'image',
-            //   public_id: 'my_image_name',
-            //   overwrite: true
-            //  }, 
-            //  function(error, result) { 
-            //    console.log(result, error) 
-            //  });
 
              imagekit.upload({
               file: dataURL,
