@@ -109,7 +109,7 @@ function AddCourse(props) {
 
 
   const  createCertificate =  async (savedcourse) =>{
-    const host = "http://digicerti.centralindia.cloudapp.azure.com:3000/";
+    const host = "http://20.219.32.25:3000/";
 
     const s = savedcourse._id;
     const string = `${host}/certificate/${s}`;
