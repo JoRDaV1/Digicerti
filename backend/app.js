@@ -1,8 +1,10 @@
 const express = require('express')
 var cors = require('cors') 
 const mongoose = require("mongoose");
-
-mongoose.connect("mongodb+srv://digicerti:jrdv123@digi.ce0yc3q.mongodb.net/?retryWrites=true&w=majority", {
+//connect to local database
+mongoose.connect("mongodb://localhost:27017/SSIPHackathon", {
+// mongoose.connect("mongodb+srv://digicerti:jrdv123@digi.ce0yc3q.mongodb.net/?retryWrites=true&w=majority", {
+  
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
