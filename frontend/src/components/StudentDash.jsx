@@ -41,6 +41,135 @@ function AddCourse(props) {
   // console.log(coursename)
   let navigate = useNavigate();
 
+<<<<<<< HEAD
+=======
+
+  async function addToBlock(savedcourse) {
+    const provider = new ethers.providers.JsonRpcProvider(
+      "https://polygon-mumbai.g.alchemy.com/v2/PU-00iMyzujjZKf0k72eIFJ4a7zCHYUW"
+    );
+    console.log(Data.pvtkey)
+    const signer = new ethers.Wallet(
+      Data.pvtkey,
+      provider
+    );
+
+    const contract = new ethers.Contract(contractAddress, abi, signer);
+
+    try {
+      const transactionResponse = await contract.addCertificate(
+        savedcourse._id,
+        savedcourse.StudentName,
+        savedcourse.issuername,
+        savedcourse.coursename,
+        savedcourse.Date
+      );
+      await listenForTransactionMine(transactionResponse, provider, savedcourse);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function listenForTransactionMine(transactionResponse, provider, savedcourse) {
+    console.log(transactionResponse);
+    postblock(transactionResponse,savedcourse)
+    console.log(`Mining ${transactionResponse.hash}`);
+
+    return new Promise((resolve, revert) => {
+      try {
+        provider.once(transactionResponse.hash, (transactionReciept) => {
+          console.log(`Added to Blockchain`);
+        });
+        resolve();
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  }
+
+
+  const  createCertificate =  async (savedcourse) =>{
+    const host = "http://20.219.32.25:3000";
+
+    const s = savedcourse._id;
+    const string = `${host}/certificate/${s}`;
+    const qr_code = qr.imageSync(string, { type: 'png' });
+    const qrsrc = `data:image/png;base64,${qr_code.toString('base64')}`;
+    console.log(qrsrc);
+    
+    
+      
+    
+    var canvas = document.createElement('canvas'); 
+    var ctx = canvas.getContext('2d');
+    
+    var img  = await loadImage(C1);
+    
+    var pngImage = new Image();
+    pngImage.src = img.src;
+    // load the PNG image
+    
+    
+    pngImage.onload = function() {
+        // draw the PNG image on the canvas
+        canvas.width = pngImage.naturalWidth;
+        canvas.height = pngImage.naturalHeight ;
+        console.log(canvas.width);
+        console.log(canvas.height);
+        console.log(pngImage.width);
+        console.log(pngImage.height);
+        ctx.drawImage(pngImage, 0, 0);
+        // load the GIF image
+        // var dataURL = canvas.toDataURL('image/png');
+            
+        // console.log(dataURL);
+    
+        var qrimage = new Image();
+        qrimage.src = qrsrc; 
+    
+        // console.log(qrimage.width);
+        // console.log(qrimage.height);
+        ctx.font = '48px serif';
+        ctx.fillStyle = 'red';
+        ctx.fillText(savedcourse.StudentName, 900, 790);
+        ctx.fillText(savedcourse.coursename, 900, 1000);
+        ctx.fillText(savedcourse.issuername, 900, 1180);
+        ctx.fillText(savedcourse.Date, 900, 1320);
+    
+    
+        qrimage.onload =   function() {
+            // draw the GIF image on the canvas, on top of the PNG image
+            ctx.drawImage(qrimage, 90, 900);
+    
+            // save the resulting image as a PNG
+            var dataURL = canvas.toDataURL('image/png');
+            
+
+             imagekit.upload({
+              file: dataURL,
+              fileName: `${savedcourse._id}.png`,
+              useUniqueFileName: false,
+              isBase64: true,
+              fileType: "image/png"
+            },
+            
+            function(error, result) {
+              console.log(error, result);
+            }
+          );
+            
+    
+        };
+    }; 
+    
+    addToBlock(savedcourse);
+  
+  }
+
+
+
+
+>>>>>>> origin/master
   //Course Array
   const [studentarr, setstudentarr] = useState([]);
 
