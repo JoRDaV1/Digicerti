@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import "./Popup2.css";
+
 // {toggle, isOpen }
 const Modal = () => {
 //   const [modalOpen, setModalOpen] = useState(isOpen);
@@ -21,8 +23,12 @@ const Modal = () => {
             <h3>Added Successfully</h3>
             </h5>
           } */}
-           <h5> Plz hold tight while we adding your certificate to blockchain and creating image of the certificate</h5>
-
+<div className="spinner-border text-primary" role="status">
+<div className="loading-spinner">
+      <div className="loading-spinner-bar"></div>
+      <div className="loading-spinner-bar"></div>
+      <div className="loading-spinner-bar"></div>
+    </div>    </div>
           </div>
         </div>
       )}

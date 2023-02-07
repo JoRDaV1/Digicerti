@@ -58,6 +58,10 @@ function SignUpIssuer() {
     navigate('/');
     alert("SuccessFully Created Account Please Login", "success")
 	}
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -117,19 +121,35 @@ function SignUpIssuer() {
               <Grid item xs={12}>
                 <TextField
                   required
+                  type={showPassword ? "text" : "password"}
+
                   fullWidth
                   name="password"
                   label="Password"
-                  type="password"
                   id="password"
                   autoComplete="new-password"
                   value={PD} onChange={(e) => SetPD(e.target.value)} 
+
                 />
+                          <a onClick={togglePasswordVisibility}  style={{
+          background: "none",
+          border: "none",
+          cursor: "pointer",
+          outline: "none",
+          position: "absolute",
+          right: "41%",
+          top: "47%",
+
+
+        }}>
+   {showPassword ? "Hide" : "Show"} </a>
+             
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
+                required
                   control={<Checkbox value="none" color="primary" />}
-                  label="Hereby ........."
+                  label="Hereby I agree to the terms and conditions of the website"
                 />
               </Grid>
             </Grid>

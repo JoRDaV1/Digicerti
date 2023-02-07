@@ -1,22 +1,4 @@
-.modal-overlay {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 15%;
-    left: 50%;
-  }
-  
-  .modal-content {
-    background-color: white;
-    padding: 20px;
-    max-width: 300px;
-    margin-top: 100%;
-    margin-top: 15%!important;
-    margin-left: 50%!important;
-  }
-  
-  .loading-spinner {
+.loading-spinner {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -42,8 +24,6 @@
       transform: scale(1);
     }
   }
-  
-  
   
   
   

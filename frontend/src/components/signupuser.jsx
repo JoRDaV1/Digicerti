@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useState } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,12 +14,14 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
-
+import openeye from "./images/openeye.jpg"
+import closeeye from "./images/closeeye.jpg"
 import Data from "./Data";
 const theme = createTheme();
 
 
 function SignUpUser() {
+  
     const navigate = useNavigate();
   const [ FN, SetFN ] = useState("")
   const [ LN, SetLN ] = useState("")
@@ -69,6 +71,12 @@ function SignUpUser() {
     navigate('/');
     alert("SuccessFully Created Account Please Login", "success")
   }
+
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -140,24 +148,38 @@ function SignUpUser() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
+           <TextField
+                        type={showPassword ? "text" : "password"}
+
                   required
                   fullWidth
                   name="password"
                   label="Password"
-                  type="password"
                   id="password"
                   autoComplete="new-password"
                   value={PD} onChange={(e) => SetPD(e.target.value)} 
                   minlength={5}
 
                 />
+                    <a onClick={togglePasswordVisibility}  style={{
+          background: "none",
+          border: "none",
+          cursor: "pointer",
+          outline: "none",
+          position: "absolute",
+          right: "41%",
+          top: "47%",
+
+
+        }}>
+   {showPassword ? "Hide" : "Show"} </a>
+             
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="none" color="primary" />}
-                  label="Hereby ........."
-                />
+                  label="Hereby I agree to the terms and conditions of the website."
+                  required/>
               </Grid>
             </Grid>
             <Button

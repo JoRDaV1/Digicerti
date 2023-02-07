@@ -27,6 +27,7 @@ router.post('/createuser', [
   body('password', 'Password must be atleast 5 characters').isLength({ min: 5 }),
 ], async (req, res) => {
   // If there are errors, return Bad request and the errors
+  let success;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ success, errors: errors.array() });
@@ -74,6 +75,8 @@ router.post('/createissuer', [
     body('password', 'Password must be atleast 5 characters').isLength({ min: 5 }),
   ], async (req, res) => {
     // If there are errors, return Bad request and the errors
+    let success;
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -324,18 +327,13 @@ router.post('/addcourse', fetchissuer, [
       }
   })
 
-  router.post('/blockinfo', [
-    // body('id', 'Enter a valid title').isLength({ min: 5}),
-    // body('blocknumber', 'Description must be atleast 5 characters').isLength({ min: 0 }),
-    // body('blockhash', 'Select a specific certificate').isLength({ min: 0 })
-  ], async (req, res) => {
+  router.post('/blockinfo',async (req, res) => {
         try {
          
      
-  
-            // const { id, blocknumber, blockhash } = req.body;
-  console.log(req.body)
-  console.log(req.body)
+  const blockdetails =  req.body.blockdetails
+  const id = req.body.studentarr._id
+
             // If there are errors, return Bad request and the errors
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
@@ -344,8 +342,14 @@ router.post('/addcourse', fetchissuer, [
          
   
           const block = new Blockinfo({
-            id, blocknumber, blockhash
+            id:id,
+            transhash:blockdetails.hash,
+            chainId:blockdetails.chainId,
+            from:blockdetails.from,
+            to:blockdetails.to,
+
         })
+        console.log(block)
   
         const savedblock = await block.save()
   
@@ -356,6 +360,21 @@ router.post('/addcourse', fetchissuer, [
             res.status(500).send("Internal Server Error");
         }
     })
+
+    router.get('/blockinfo', async (req, res) => {
+      try {
+       Id = req.header('certificateId');
+       const cdetails = await Blockinfo.find({id:Id})
+         
+            res.json(cdetails)
+         
+      
+      } catch (error) {
+          console.error(error.message);
+          res.status(500).send("Internal Server Error");
+      }
+  })
+
   
 
   router.get('/fetchcertificate',fetchcertificate, async (req, res) => {
@@ -504,5 +523,26 @@ router.post('/addstudents', fetchissuer, [
           res.status(500).send("Internal Server Error");
       }
   })
+
+  router.get('/noofcourses', fetchissuer, async (req, res) => {
+    try {
+      issuerId = req.issuer.id;
+      const issu = await Issuer.findById(issuerId).select("-password")
+      issueremail = issu.email
+            let course = await Certificate.find({issueremail: issueremail})
+        if (!course) { return res.status(404).send("Not Found") }
+      
+    
+
+      let students = await Course.find({issueremail: issueremail})
+      if (!students) { return res.status(404).send("Not Found") }
+    
+    res.send({courses:course.length,students:students.length})
+
+} catch (error) { 
+        console.error(error.message);
+        res.status(500).send("Internal Server Error");
+    }
+})
 
 module.exports = router

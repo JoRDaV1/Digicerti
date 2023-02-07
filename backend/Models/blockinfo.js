@@ -1,20 +1,27 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
 const blockinfo = new mongoose.Schema({
-    id: {
+  id: {
     type: String,
     required: true,
-    },
-blocknumber : {
+  },
+
+  transhash: {
+    type: String,
+    required: true,
+  },
+  chainId: {
     type: Number,
     required: true,
-    },
-blockhash : {
+  },
+  from: {
     type: String,
     required: true,
-    },
+  },
+  to: {
+    type: String,
+    required: true,
+  },
+})
 
-
-});
-
-module.exports = mongoose.model("Block", blockinfo);
+module.exports = mongoose.model('Block', blockinfo)

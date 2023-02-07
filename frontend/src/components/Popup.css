@@ -17,6 +17,7 @@
     border-radius: 5px;
     width: 70%;
     height: auto;
+    text-align: center;
 }
 
 .popup-inner .close-btn {

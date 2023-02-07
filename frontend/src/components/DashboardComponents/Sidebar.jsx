@@ -7,6 +7,10 @@ const Sidebar = () => {
   const host = Data.URL;
 
   const [name, setname] = useState("");
+  const [courses, setcourses] = useState("");
+  const [students, setstudents] = useState("");
+
+
 
   useEffect(() => {
 
@@ -26,6 +30,30 @@ const Sidebar = () => {
     }
     getissuer();
     })
+
+
+    useEffect(() => {
+
+      const noofcourses = async() => {
+        const response = await fetch(
+          `${host}/api/auth/noofcourses`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            "auth-token":  token            },
+          }
+        );
+        const courses = await response.json();
+        setcourses(courses.courses);
+        setstudents(courses.students);
+
+
+      }
+      noofcourses();
+
+      },[])
+
   return (
     <div
       className="col-md-3 col-lg-2 sidebar-offcanvas pl-0"
@@ -47,35 +75,12 @@ const Sidebar = () => {
               className="card-body bg-secondary"
               style={{ backgroundColor: "#E7E7E7" }}
             >
-              <h5> 10-Courses</h5>
-              <h5>55-Students</h5>
+              <h5> {courses} -Courses</h5>
+              <h5>{students}-Students</h5>
             </div>
           </div>
         </li>
-        <li className="nav-item mb-2 ">
-          <a className="nav-link text-secondary" href="#">
-            <i className="fas fa-user font-weight-bold"></i>{" "}
-            <span className="ml-3">Students</span>
-          </a>
-        </li>
-        <li className="nav-item mb-2">
-          <a
-            className="nav-link text-secondary"
-            href="#submenu1"
-            data-toggle="collapse"
-            data-target="#submenu1"
-          >
-            <i className="far fa-file-word font-weight-bold"></i>{" "}
-            <span className="ml-3"> Certifications</span>
-          </a>
-        </li>
 
-        <li className="nav-item mb-2">
-          <a className="nav-link text-secondary" href="#">
-            <i className="fas fa-atom font-weight-bold"></i>{" "}
-            <span className="ml-3">Settings</span>
-          </a>
-        </li>
       </ul>
     </div>
   );

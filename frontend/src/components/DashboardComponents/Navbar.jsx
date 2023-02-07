@@ -7,6 +7,8 @@ export const Navbar = () => {
   async function postUserDetails(e) {
     e.preventDefault();
     localStorage.removeItem("token");
+    localStorage.removeItem("person");
+
     navigate("/");
   }
   return (
@@ -22,7 +24,7 @@ export const Navbar = () => {
         </button>
         <a
           className="navbar-brand"
-          href="#"
+          href="/"
           title="Free Bootstrap 4 Admin Template"
           style={{
             fontSize: "1.5rem",
@@ -47,7 +49,7 @@ export const Navbar = () => {
           <li className="nav-item">
             <a
               className="nav-link"
-              href=""
+              href="/about"
               data-target="#myModal"
               data-toggle="modal"
             >

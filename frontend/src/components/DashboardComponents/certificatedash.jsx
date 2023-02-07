@@ -5,10 +5,17 @@ import Popup from "../Popup";
 import { ethers } from "ethers";
 import { contractAddress, abi } from "../constants";
 import Data from "../Data";
-
+import LoadingSpinner from "./LoadingSpinner"
 import { useParams } from "react-router-dom";
+import "./verification.css";
+import success from "../images/success.jpg";
 
 const Dashboard = () => {
+  const [blockdetails, setblockdetails] = useState([]);
+  const [transurl, settransurl] = useState("");
+  const [fromurl, setfromurl] = useState("");
+  const [tourl, settourl] = useState("");
+
   const popupstyle = {
     margin: "0", fontsize: "32px", fontweight: "700", letterspacing: -"1px",  lineheight: "48px"
   }
@@ -21,6 +28,36 @@ const Dashboard = () => {
 
   const host = Data.URL;
   var { certificateid } = useParams();
+
+  useEffect(() => {
+    const loadCertificate = async () => {
+      const response = await fetch(`${host}/api/auth/blockinfo`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          certificateId: certificateid,
+        },
+      });
+      const course = await response.json();
+setblockdetails(course)
+
+
+    };
+    loadCertificate(certificateid);
+  }, []);
+useEffect(() => {
+
+  blockdetails.map((blockdetails) => {
+
+    settransurl("https://goerli.etherscan.io/tx/" + blockdetails.transhash) ;
+    setfromurl("https://goerli.etherscan.io/address/" + blockdetails.from)  ;
+settourl ( "https://goerli.etherscan.io/address/" + blockdetails.to) ;
+  })
+
+}, [blockdetails])
+ 
+
+
 
   useEffect(() => {
     const loadCertificate = async () => {
@@ -39,9 +76,10 @@ const Dashboard = () => {
     loadCertificate(certificateid);
   }, []);
 
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState(false);
 
     async function verifyCertificate(savedcourse) {
+
       const provider = new ethers.providers.JsonRpcProvider(
         "https://polygon-mumbai.g.alchemy.com/v2/PU-00iMyzujjZKf0k72eIFJ4a7zCHYUW"
       );
@@ -62,12 +100,13 @@ const Dashboard = () => {
           issuedOn
         );
         if (transactionResponse) {
-          setResponse("Certificate Verified");
+          setResponse(true);
           setClass(customclass1)
+          
         }
         else{
           setResponse("Certificate Not Verified");
-          setClass(customclass2)
+          setClass(false)
         }
       } catch (error) {
         console.log(error);
@@ -75,7 +114,7 @@ const Dashboard = () => {
     }
 
   const customstyle = {
-    width: "1200px",
+    width: "90%",
     height: "700px",
     marginLeft: "80px",
   };
@@ -83,79 +122,109 @@ const Dashboard = () => {
 
   var imgsrc = "https://ik.imagekit.io/c8sopbrm9/" + certificateid + ".png";
 
-  return (
-    <div className="col main pt-5 mt-3">
-      <p className="lead d-none d-sm-block">
-        View & Verify your certificate here{" "}
-      </p>
+  return (  <div className="col main pt-5 mt-3">
+  <p className="lead d-none d-sm-block">
+    View & Verify your certificate here{" "}
+  </p>
+  <div
+    className="alert alert-warning fade collapse"
+    role="alert"
+    id="myAlert"
+  >
+    <button
+      type="button"
+      className="close"
+      data-dismiss="alert"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">×</span>
+      <span className="sr-only">Close</span>
+    </button>
+    <strong>Data and Records</strong> Learn more about employee
+  </div>
+  <div className="row mb-3">
+    <div className="col-xl-8 col-sm-6 py-2">
+      <img style={customstyle} src={imgsrc}></img>
+    </div>
+    <div className="col-xl-3 col-sm-6 py-2" style={{ marginTop: "20%" , height: "50%", width:"  "}}>
       <div
-        className="alert alert-warning fade collapse"
-        role="alert"
-        id="myAlert"
+        className="text-right card text-black bg-white h-100"
+        style={{ padding: "10px" }}
       >
+        {/* add a line break */}
+        {/* <br /> */}
+        <h2
+          style={{
+            textAlign: "center",
+            fontSize: "30px",
+            marginBottom: "30px",
+          }}
+        >
+          Credential Verification
+        </h2>
+        <p style={{ textAlign: "center", fontSize: "20px" }}>
+          This Certificate now Legitimately belongs to this person{" "}
+        </p>
+        <p style={{ textAlign: "center", fontSize: "20px" }}>
+          {" "}
+          Now, Verify the credentials with Blockchain Transaction
+        </p>
         <button
           type="button"
-          className="close"
-          data-dismiss="alert"
-          aria-label="Close"
+          class="btn btn-primary btn-lg"
+          onClick={() => setButtonPopup(true)}
         >
-          <span aria-hidden="true">×</span>
-          <span className="sr-only">Close</span>
+          {" "}
+          Verify & Validate{" "}
         </button>
-        <strong>Data and Records</strong> Learn more about employee
+        <Popup trigger={buttonPopup} setTrigger={setButtonPopup} style={{marginLeft:"10px"}} >
+        <div class="verification-container">
+    {response ? <div><h1 class="verification-header" style={{color:"green"}}>Verification Successful</h1> <img src={success} alt="Success Icon" class="verification-icon"/>   <p class="verification-message">Your account has been successfully verified!</p>
+</div> : <h1 style={{color:"red"}} class="verification-header">Verification Failed</h1>}
+    
+</div>
+{blockdetails.map((blockdetail) => (
+  <div id="transaction-box">
+  <h2>Transaction Details</h2>
+  <table id="transaction-table">
+  <tr>
+      <th>Chain Id</th>
+      <td id="date">{blockdetail.chainId}</td>
+    </tr>
+    <tr>
+    <th>Transaction Hash</th>
+
+      <a href={transurl} target="_blank">
+      <td id="date">{blockdetail.transhash}</td>
+      </a>
+      
+    </tr>
+    <tr>
+      <th>from</th>
+      <a href={fromurl} target="_blank">
+      <td id="amount">{blockdetail.from}</td>
+
+      </a>
+    </tr>
+    <tr>
+      <th>to</th>
+      <a href={tourl} target="_blank">
+      <td id="type">{blockdetail.to}</td>
+
+      </a>
+    </tr>
+  </table>
+</div>
+
+  ))}
+
+        </Popup>
       </div>
-      <div className="row mb-3">
-        <div className="col-xl-8 col-sm-6 py-2">
-          <img style={customstyle} src={imgsrc}></img>
-        </div>
-        <div className="col-xl-3 col-sm-6 py-2" style={{ marginTop: "20%" }}>
-          <div
-            className="text-right card text-black bg-white h-100"
-            style={{ padding: "10px" }}
-          >
-            {/* add a line break */}
-            {/* <br /> */}
-            <h2
-              style={{
-                textAlign: "center",
-                fontSize: "30px",
-                marginBottom: "30px",
-              }}
-            >
-              Credential Verification
-            </h2>
-            <p style={{ textAlign: "center", fontSize: "20px" }}>
-              This Certificate now Legitimately belongs to this person{" "}
-            </p>
-            <p style={{ textAlign: "center", fontSize: "20px" }}>
-              {" "}
-              Now, Verify the credentials with Blockchain Transaction
-            </p>
-            <button
-              type="button"
-              class="btn btn-primary btn-lg"
-              onClick={() => setButtonPopup(true)}
-            >
-              {" "}
-              Verify & Validate{" "}
-            </button>
-            <Popup trigger={buttonPopup} setTrigger={setButtonPopup} style={{marginLeft:"10px"}} >
-              <div style={{marginRight:"500px"}}>
-              <h1 style={popupstyle} >Verifying your Credentials <div style={{marginBottom:"7px"}} className="spinner-grow" role="status">
-  <span className="sr-only">Loading...</span>
-</div></h1>
-<br />
-<div class={clas} style={{marginLeft:"350px"}} role="alert">
-<h2 style={{marginRight:"150px"}} > {response}</h2></div>
-              
-              </div>
-           
-            </Popup>
-          </div>
-        </div>
-      </div>
-      <hr />
     </div>
+  </div>
+  <hr />
+</div>
+ 
   );
 };
 

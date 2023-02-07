@@ -1,0 +1,79 @@
+.verification-container {
+    width: 500px;
+    margin: 100px auto;
+    text-align: center;
+  }
+  
+  .verification-header {
+    font-size: 36px;
+    margin-bottom: 40px;
+  }
+  
+  .verification-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 40px;
+    animation: icon-bounce 1s ease-in-out infinite;
+  }
+  
+  .verification-message {
+    font-size: 18px;
+    margin-bottom: 40px;
+  }
+  
+  .verification-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: green;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    animation: button-pulse 1s ease-in-out infinite;
+  }
+  
+  @keyframes icon-bounce {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes button-pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  #transaction-box {
+    width: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin: 20px auto;
+    text-align: center;
+  }
+  
+  #transaction-table {
+    margin: 20px auto;
+    text-align: left;
+  }
+  
+  #transaction-table th {
+    padding: 10px;
+    font-weight: bold;
+  }
+  
+  #transaction-table td {
+    padding: 10px;
+  }
+  
