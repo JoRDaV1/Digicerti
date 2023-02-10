@@ -68,12 +68,37 @@ async function addToBlock(setButtonPopup,savedcourse) {
             savedcourse.issuername,
             savedcourse.coursename,
             savedcourse.Date
-          );
+        );
+        console.log(transactionResponse);
         await listenForTransactionMine(transactionResponse, provider, savedcourse, setButtonPopup );
     } catch (error) {
         console.log(error);
     }
 }
+
+async function addToBlockmulti(setButtonPopup, studentnamearr ,savedcourse, issuernamearr , coursearr , datearr , mongoid , type) {
+    const provider = new ethers.providers.JsonRpcProvider(
+        "https://polygon-mumbai.g.alchemy.com/v2/PU-00iMyzujjZKf0k72eIFJ4a7zCHYUW"
+    );
+    console.log(Data.pvtkey)
+    const signer = new ethers.Wallet(
+        Data.pvtkey,
+        provider
+    );
+
+    const contract = new ethers.Contract(contractAddress, abi, signer);
+
+    try {
+        const transactionResponse = await contract.addCertificateForAll(
+            mongoid,  studentnamearr , issuernamearr , coursearr , datearr 
+        );
+        console.log(transactionResponse);
+        await listenForTransactionMine(transactionResponse, provider, savedcourse, setButtonPopup, mongoid, type );
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 function listenForTransactionMine(transactionResponse, provider, savedcourse, setButtonPopup) {
     console.log(transactionResponse);
@@ -99,11 +124,18 @@ function listenForTransactionMine(transactionResponse, provider, savedcourse, se
     });
 }
 
-export const createCertificate = async (setButtonPopup, savedcourse) => {
-    console.log(savedcourse);
+export const createCertificate = async (setButtonPopup, savedcourse,  studentnamearr , issuernamearr , coursearr , datearr , mongoid, type ) => {
     setButtonPopup(true);
-    await addToBlock(setButtonPopup,savedcourse);
+    
+    if(type==="csv"){
+        await addToBlockmulti(setButtonPopup, studentnamearr ,savedcourse, issuernamearr , coursearr , datearr , mongoid );
 
+    }
+    else{
+
+    await addToBlock(setButtonPopup,savedcourse);
+    }
+// if(1=1){
     const s = savedcourse._id;
     const string = `${host}/certificate/${s}`;
     const qr_code = qr.imageSync(string, { type: 'png' });
@@ -139,25 +171,20 @@ export const createCertificate = async (setButtonPopup, savedcourse) => {
 
         var qrimage = new Image();
         qrimage.src = qrsrc;
- 
+
         // console.log(qrimage.width);
         // console.log(qrimage.height);
-        const x = canvas.width / 2;
-        const str = savedcourse.Date;  
-        console.log(str);
-        const strdate = str.slice(0, 10);
-        console.log(strdate); 
-        ctx.font = '40px times new roman';
-        ctx.fillStyle = 'black';
-        ctx.fillText(savedcourse.StudentName, x-40, 780);
+        ctx.font = '48px serif';
+        ctx.fillStyle = 'red';
+        ctx.fillText(savedcourse.StudentName, 900, 790);
         ctx.fillText(savedcourse.coursename, 900, 1000);
-        ctx.fillText(savedcourse.issuername, 930, 1170);
-        ctx.fillText(strdate, 930, 1320);
+        ctx.fillText(savedcourse.issuername, 900, 1180);
+        ctx.fillText(savedcourse.Date, 900, 1320);
 
 
         qrimage.onload = function () {
             // draw the GIF image on the canvas, on top of the PNG image
-            ctx.drawImage(qrimage, 80, 900);
+            ctx.drawImage(qrimage, 90, 900);
 
             // save the resulting image as a PNG
             var dataURL = canvas.toDataURL('image/png');
@@ -194,6 +221,8 @@ export const createCertificate = async (setButtonPopup, savedcourse) => {
         ind=0;
     }
     
+
+// }
 
   
   }
