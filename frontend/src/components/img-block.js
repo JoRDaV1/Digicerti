@@ -68,7 +68,7 @@ async function addToBlock(setButtonPopup,savedcourse) {
             savedcourse.issuername,
             savedcourse.coursename,
             savedcourse.Date
-        );
+          );
         await listenForTransactionMine(transactionResponse, provider, savedcourse, setButtonPopup );
     } catch (error) {
         console.log(error);
@@ -100,6 +100,7 @@ function listenForTransactionMine(transactionResponse, provider, savedcourse, se
 }
 
 export const createCertificate = async (setButtonPopup, savedcourse) => {
+    console.log(savedcourse);
     setButtonPopup(true);
     await addToBlock(setButtonPopup,savedcourse);
 
@@ -138,20 +139,25 @@ export const createCertificate = async (setButtonPopup, savedcourse) => {
 
         var qrimage = new Image();
         qrimage.src = qrsrc;
-
+ 
         // console.log(qrimage.width);
         // console.log(qrimage.height);
-        ctx.font = '48px serif';
-        ctx.fillStyle = 'red';
-        ctx.fillText(savedcourse.StudentName, 900, 790);
+        const x = canvas.width / 2;
+        const str = savedcourse.Date;  
+        console.log(str);
+        const strdate = str.slice(0, 10);
+        console.log(strdate); 
+        ctx.font = '40px times new roman';
+        ctx.fillStyle = 'black';
+        ctx.fillText(savedcourse.StudentName, x-40, 780);
         ctx.fillText(savedcourse.coursename, 900, 1000);
-        ctx.fillText(savedcourse.issuername, 900, 1180);
-        ctx.fillText(savedcourse.Date, 900, 1320);
+        ctx.fillText(savedcourse.issuername, 930, 1170);
+        ctx.fillText(strdate, 930, 1320);
 
 
         qrimage.onload = function () {
             // draw the GIF image on the canvas, on top of the PNG image
-            ctx.drawImage(qrimage, 90, 900);
+            ctx.drawImage(qrimage, 80, 900);
 
             // save the resulting image as a PNG
             var dataURL = canvas.toDataURL('image/png');

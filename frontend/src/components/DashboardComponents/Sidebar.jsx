@@ -65,6 +65,8 @@ const Sidebar = () => {
       <ul className="nav flex-column sticky-top pl-0 pt-5 p-3 mt-3 ">
         <li className="nav-item mb-2 mt-3">
           <a className="nav-link text-secondary" href="#">
+          <h6 className="text-center"      
+>Hi!</h6>
             <h6 className="text-center"      style={{  fontSize: "125%", }}
 >{name}</h6>
           </a>
@@ -75,8 +77,8 @@ const Sidebar = () => {
               className="card-body bg-secondary"
               style={{ backgroundColor: "#E7E7E7" }}
             >
-              <h5> {courses} -Courses</h5>
-              <h5>{students}-Students</h5>
+              <h5 style={{fontWeight:"100"}}> {courses} - Courses</h5>
+              <h5 style={{fontWeight:"100"}}>{students} - Students</h5>
             </div>
           </div>
         </li>

@@ -37,9 +37,9 @@ const Sidebar = () => {
       <ul className="nav flex-column sticky-top pl-0 pt-5 p-3 mt-3 ">
         <li className="nav-item mb-2 mt-3">
           <a className="nav-link text-secondary" href="#">
-            <h6 className="text-center"      style={{  fontSize: "125%", }}
->Hi</h6>
-<h5 className="text-center" >{name}</h5>
+            <h6 className="text-center"   style={{fontWeight:"100"}}   
+>Hi !</h6>
+<h5 className="text-center" style={{ fontSize: "125%",fontWeight:"100"}} >{name}</h5>
           </a>
         </li>
         <li>

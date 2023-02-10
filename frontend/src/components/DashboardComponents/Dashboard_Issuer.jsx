@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import Formcourse from "../fomCourse"
-
-
+import "./dashcomp.css"
 
 const Dashboard = () => {
   
 
- 
   return (
     <div className="col main pt-5 mt-3">
-      <p className="lead d-none d-sm-block">View,Edit and Add Courses</p>
+      <p className="footerh1">Course Dashboard</p>
       <div className="alert alert-warning fade collapse" role="alert" id="myAlert">
         <button
           type="button"
@@ -27,10 +25,10 @@ const Dashboard = () => {
         <div className="col-xl-8 col-sm-6 py-2">
           <div className="text-right card text-white bg-light h-100">
             <div className="card-body">
-              <h3 className="text-info text-center ">Welcome</h3>
-              <h5 className="text-info text-center ">to </h5>
-              <h4 className="text-info text-center ">DigiCerti </h4>
-            </div>
+              <h3 className=" text-center ">Welcome</h3>
+              <h5 className=" text-center ">to </h5>
+              <h4 className=" text-center ">DigiCerti </h4>
+                          </div>
           </div>
         </div>
         <div className="col-xl-3 col-sm-6 py-2" >

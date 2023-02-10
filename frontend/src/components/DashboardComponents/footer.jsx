@@ -8,33 +8,9 @@ function Footer() {
 <footer>
 <br />
 
-      <ul className="list-inline text-center">
-        <li className="list-inline-item">
-          <a href="https://twitter.com/vishnus27071772" target="blank">
-            <span className="fa-stack fa-lg">
-              <i className="fas fa-circle fa-stack-2x"></i>
-              <i className="fab fa-twitter fa-stack-1x fa-inverse"></i>
-            </span>
-          </a>
-        </li>
-        <li className="list-inline-item">
-          <a href="https://www.facebook.com/kanakam.vishnu.5" target="blank">
-            <span className="fa-stack fa-lg">
-              <i className="fas fa-circle fa-stack-2x"></i>
-              <i className="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
-            </span>
-          </a>
-        </li>
-        <li className="list-inline-item">
-          <a href="https://www.instagram.com/vswaroop04/" target="blank">
-            <span className="fa-stack fa-lg">
-              <i className="fas fa-circle fa-stack-2x"></i>
-              <i className="fab fa-instagram fa-stack-1x fa-inverse"></i>
-            </span>
-          </a>
-        </li>
-        <br />
-        <br />
+      <ul style={{listStyleType:"none"}} className="list-inline text-center">
+
+     
 
         <section >
         <div class="container">
@@ -42,17 +18,17 @@ function Footer() {
     <div class="col-sm">
     </div>
     <div class="col-sm">
-    <p className="cpwright">
+    <p className="cpwright" style={{color:"#ffff", marginLeft:"20px"}}>
         
         Tools and Technologies Used:
       </p>
     <p className="svw">
-    <ul className="ul">
+    <ul style={{listStyleType:"none"}} className="ul">
     <li>
 <a href="www.figma.com">   Figma</a> 
 </li>
 <li>
-<a href="www.figma.com">   React</a> 
+<a href="www.react.com">   React</a> 
 </li>
 <li>
 <a href="www.figma.com">   NodeJS and ExpressJS</a> 
@@ -75,7 +51,7 @@ function Footer() {
 
         </section>
       </ul>
-      <p className="bg-dark cpwright text-center">
+      <p className="bg-light cpwright text-center">
       <br />
 &copy; DigiCerti {year}
 <br />

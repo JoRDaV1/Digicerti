@@ -49,9 +49,9 @@ useEffect(() => {
 
   blockdetails.map((blockdetails) => {
 
-    settransurl("https://goerli.etherscan.io/tx/" + blockdetails.transhash) ;
-    setfromurl("https://goerli.etherscan.io/address/" + blockdetails.from)  ;
-settourl ( "https://goerli.etherscan.io/address/" + blockdetails.to) ;
+    settransurl("https://mumbai.polygonscan.com/tx/" + blockdetails.transhash) ;
+    setfromurl("https://mumbai.polygonscan.com/address/" + blockdetails.from)  ;
+settourl ( "https://mumbai.polygonscan.com/address/" + blockdetails.to) ;
   })
 
 }, [blockdetails])
@@ -105,7 +105,7 @@ settourl ( "https://goerli.etherscan.io/address/" + blockdetails.to) ;
           
         }
         else{
-          setResponse("Certificate Not Verified");
+          setResponse(false);
           setClass(false)
         }
       } catch (error) {
@@ -123,7 +123,7 @@ settourl ( "https://goerli.etherscan.io/address/" + blockdetails.to) ;
   var imgsrc = "https://ik.imagekit.io/c8sopbrm9/" + certificateid + ".png";
 
   return (  <div className="col main pt-5 mt-3">
-  <p className="lead d-none d-sm-block">
+      <p className="footerh1">
     View & Verify your certificate here{" "}
   </p>
   <div

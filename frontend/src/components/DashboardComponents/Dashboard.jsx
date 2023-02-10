@@ -71,12 +71,16 @@ const Dashboard = () => {
       <h3 className="sub-header mt-5">Certifications</h3>
       <h3 className="sub-header mt-5"></h3>
       <div className="mb-3">
+        
         <div className="card-deck">
         {courseArr.map((output) => (
                <div className="card card-inverse card-success text-center">
-               <div className="card-body">
+               <div className="1card-body">
                  <blockquote className="card-blockquote">
-                         <img src={`https://ik.imagekit.io/c8sopbrm9/tr:n-ik_ml_thumbnail/${output._id}.png`} alt="1" border="0" style={{width:'450px'}} />
+                  <a href={`certificate/${output._id}`}>
+                  <img src={`https://ik.imagekit.io/c8sopbrm9/tr:n-ik_ml_thumbnail/${output._id}.png`} alt="1" border="0" style={{width:'450px'}} />
+
+                  </a>
         
                 <footer>
                   <cite>

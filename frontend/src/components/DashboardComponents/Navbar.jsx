@@ -12,6 +12,7 @@ export const Navbar = () => {
     navigate("/");
   }
   return (
+    
     <nav className="navbar fixed-top navbar-expand-md navbar-dark bg-dark mb-3">
       <div className="flex-row d-flex">
         <button

@@ -1,0 +1,27 @@
+.footerh1 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #6c757d;
+    text-align: center;
+    animation: fadein 2s;
+    font-weight: 100;
+  }
+  
+  @keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .card-body {
+    background-color: #6c757d;
+    padding: 0.25rem;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+    border-radius: 0.25rem;
+    animation: fadein 2s;
+    text-align: center;
+  }
+  .card-body h3 h4 h5 {
+    color: #fff!important;
+  }
