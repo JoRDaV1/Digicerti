@@ -93,7 +93,7 @@ async function addToBlockmulti(setButtonPopup, studentnamearr ,savedcourse, issu
             mongoid,  studentnamearr , issuernamearr , coursearr , datearr 
         );
         console.log(transactionResponse);
-        await listenForTransactionMine(transactionResponse, provider, savedcourse, setButtonPopup, mongoid, type );
+        await listenForTransactionMine(transactionResponse, provider, savedcourse, setButtonPopup   );
     } catch (error) {
         console.log(error);
     }
@@ -126,7 +126,7 @@ function listenForTransactionMine(transactionResponse, provider, savedcourse, se
 
 export const createCertificate = async (setButtonPopup, savedcourse,  studentnamearr , issuernamearr , coursearr , datearr , mongoid, type ) => {
     setButtonPopup(true);
-    
+    console.log(type);
     if(type==="csv"){
         await addToBlockmulti(setButtonPopup, studentnamearr ,savedcourse, issuernamearr , coursearr , datearr , mongoid );
 
@@ -174,12 +174,13 @@ export const createCertificate = async (setButtonPopup, savedcourse,  studentnam
 
         // console.log(qrimage.width);
         // console.log(qrimage.height);
-        ctx.font = '48px serif';
-        ctx.fillStyle = 'red';
+        ctx.font = '40px serif';
+        ctx.fillStyle = 'black';
+        const onlydate = savedcourse.Date;
         ctx.fillText(savedcourse.StudentName, 900, 790);
         ctx.fillText(savedcourse.coursename, 900, 1000);
         ctx.fillText(savedcourse.issuername, 900, 1180);
-        ctx.fillText(savedcourse.Date, 900, 1320);
+        ctx.fillText(onlydate.slice(0,10), 900, 1320);
 
 
         qrimage.onload = function () {

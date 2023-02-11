@@ -110,7 +110,7 @@ function AddCourse(props) {
     // s = course._id;
     // console.log(s);
 
-    await createCertificate(setButtonPopup, course, studentnamearr , issuernamearr , coursearr , datearr , mongoid, type);
+    await createCertificate(setButtonPopup, course, studentnamearr , issuernamearr , coursearr , datearr , mongoid, "csv");
 
     setstudentarr(studentarr.concat(course));
     console.log(buttonPopup);
@@ -212,7 +212,7 @@ function AddCourse(props) {
             <h4 className="text-center" id="Addcourse">
               Add Student
             </h4>
-            <div className="upload">
+            <div className="upload" style={{marginLeft:"35%"}}>
               <button className="active" onClick={handleForm}>
                 <p> Manual Upload </p>
               </button>
@@ -225,7 +225,7 @@ function AddCourse(props) {
             {/* <img src={needsrc}/> */}
             <div className="form-container">
               {upload ? (
-                <form autoComplete="off" className="form-group">
+                <form autoComplete="off" className="form-group" style={{textAlign:"center"}}>
                   <label> Please Upload the Excel File </label>
                   <br />
                   <input
@@ -236,13 +236,7 @@ function AddCourse(props) {
                     type="file"
                   />
 
-                  <button
-                    type="submit"
-                    className="btn btn-secondary"
-                    onClick={handleFile}
-                  >
-                    Submit
-                  </button>
+                
                 </form>
               ) : (
                 <form autoComplete="off" className="form-group">
