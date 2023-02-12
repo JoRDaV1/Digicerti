@@ -90,7 +90,7 @@ async function addToBlockmulti(setButtonPopup, studentnamearr ,savedcourse, issu
 
     try {
         const transactionResponse = await contract.addCertificateForAll(
-            mongoid,  studentnamearr , issuernamearr , coursearr , datearr 
+            mongoid,  studentnamearr , issuernamearr , coursearr , datearr , {gasLimit: 10000000}
         );
         console.log(transactionResponse);
         await listenForTransactionMine(transactionResponse, provider, savedcourse, setButtonPopup   );
