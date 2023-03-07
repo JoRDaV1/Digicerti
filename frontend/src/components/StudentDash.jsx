@@ -13,7 +13,7 @@ import C3 from "../photos/3.png";
 import C4 from "../photos/4.png";
 import C5 from "../photos/5.png";
 import C6 from "../photos/6.png";
-import { createCertificate,addToBlock } from "./img-block";
+import { createCertificate, addToBlock } from "./img-block";
 const qr = require("qr-image");
 
 var ImageKit = require("imagekit");
@@ -47,7 +47,6 @@ function AddCourse(props) {
   const [datearr, setdatearr] = useState([]);
 
   const [mongoid, setmongoidarr] = useState([]);
-
 
   const host = Data.URL;
 
@@ -90,7 +89,13 @@ function AddCourse(props) {
   // var needsrc = "";
 
   // let s ="";
-  const addstudents = async (StudentName, StudentEmail, Grade, coursename, type) => {
+  const addstudents = async (
+    StudentName,
+    StudentEmail,
+    Grade,
+    coursename,
+    type
+  ) => {
     const response = await fetch(`${host}/api/auth/addstudents`, {
       method: "POST",
       headers: {
@@ -106,11 +111,20 @@ function AddCourse(props) {
     coursearr.push(course.coursename);
     datearr.push(course.Date);
     mongoid.push(course._id);
-    
+
     // s = course._id;
     // console.log(s);
 
-    await createCertificate(setButtonPopup, course, studentnamearr , issuernamearr , coursearr , datearr , mongoid, "csv");
+    await createCertificate(
+      setButtonPopup,
+      course,
+      studentnamearr,
+      issuernamearr,
+      coursearr,
+      datearr,
+      mongoid,
+      "csv"
+    );
 
     setstudentarr(studentarr.concat(course));
     console.log(buttonPopup);
@@ -139,15 +153,23 @@ function AddCourse(props) {
       complete: function(results) {
         setdata(results.data);
         setdata(results.data.length);
-    for(let i=1;i<results.data.length;i++){
-      if(results.data[i][0] == "" || results.data[i][1] == "" || results.data[i][2] == ""){
-        break;
-      }
-      else{
-     addstudents(results.data[i][1],results.data[i][2],results.data[i][3],coursename, "csv");
-
-      }
-    }
+        for (let i = 1; i < results.data.length; i++) {
+          if (
+            results.data[i][0] == "" ||
+            results.data[i][1] == "" ||
+            results.data[i][2] == ""
+          ) {
+            break;
+          } else {
+            addstudents(
+              results.data[i][1],
+              results.data[i][2],
+              results.data[i][3],
+              coursename,
+              "csv"
+            );
+          }
+        }
         console.log(results);
       },
     });
@@ -212,7 +234,7 @@ function AddCourse(props) {
             <h4 className="text-center" id="Addcourse">
               Add Student
             </h4>
-            <div className="upload" style={{marginLeft:"35%"}}>
+            <div className="upload" style={{ marginLeft: "35%" }}>
               <button className="active" onClick={handleForm}>
                 <p> Manual Upload </p>
               </button>
@@ -225,7 +247,11 @@ function AddCourse(props) {
             {/* <img src={needsrc}/> */}
             <div className="form-container">
               {upload ? (
-                <form autoComplete="off" className="form-group" style={{textAlign:"center"}}>
+                <form
+                  autoComplete="off"
+                  className="form-group"
+                  style={{ textAlign: "center" }}
+                >
                   <label> Please Upload the Excel File </label>
                   <br />
                   <input
@@ -235,8 +261,6 @@ function AddCourse(props) {
                     required={true}
                     type="file"
                   />
-
-                
                 </form>
               ) : (
                 <form autoComplete="off" className="form-group">
