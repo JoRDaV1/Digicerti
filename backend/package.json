@@ -4,7 +4,9 @@
   "description": "This is a Decentralized  Certification App which allows us verify,Store and validate certificates ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "dev": "nodemon app.js"
   },
   "author": "K V Vishnu Swaroop",
   "license": "ISC",
@@ -18,6 +20,7 @@
     "cloudinary": "^1.33.0",
     "cors": "^2.8.5",
     "express": "^4.18.1",
+    "express-validator": "^7.0.1",
     "framer-motion": "^7.4.0",
     "jsonwebtoken": "^8.5.1",
     "md5": "^2.3.0",
