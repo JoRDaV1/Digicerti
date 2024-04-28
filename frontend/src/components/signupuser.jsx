@@ -172,7 +172,7 @@ function SignUpUser() {
 
 
         }}>
-   {showPassword ? "Hide" : "Show"} </a>
+   </a>
              
               </Grid>
               <Grid item xs={12}>

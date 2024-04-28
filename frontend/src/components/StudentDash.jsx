@@ -21,7 +21,7 @@ var ImageKit = require("imagekit");
 // //  using imagekit sdk ref- https://imagekit.io/dashboard/developer/api-keys
 var imagekit = new ImageKit({
   publicKey: "public_ka1/kAxhk07Ei8C1sCVfKZyly8s=",
-  privateKey: "private_uL/R+P7HQpH28Bcp+FY/Na6/ZgE=",
+  privateKey: process.env.REACT_APP_IMG_KIT_PRIVATE_KEY,
   urlEndpoint: "https://ik.imagekit.io/c8sopbrm9",
 });
 
@@ -67,7 +67,7 @@ function AddCourse(props) {
       setstudentarr(completeCourseDetails);
     };
     loadCourse(coursename);
-  }, [studentarr]);
+  }, []);
 
   const divideArrays = (arrays) => {
     let subArrays = [];

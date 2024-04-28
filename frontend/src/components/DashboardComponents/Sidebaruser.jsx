@@ -25,7 +25,7 @@ const Sidebar = () => {
       setname(USER.fname);
     }
     getuser();
-    })
+    },[])
   return (
     <div
       className="col-md-3 col-lg-2 sidebar-offcanvas pl-0"

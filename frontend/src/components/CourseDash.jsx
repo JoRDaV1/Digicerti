@@ -9,20 +9,14 @@ function UserDash() {
   const {coursename} = useParams();
   return (
     <div>
-
-
       <Navbar />
-
       <div className="container-fluid" id="main">
         <div className="row row-offcanvas row-offcanvas-left">
-
           <Sidebar />
           <div className="col main pt-5 mt-3">
           <Studentdash  name = {coursename}/>
           </div>
-
         </div>
-
         <Footer />
       </div>
     </div>
