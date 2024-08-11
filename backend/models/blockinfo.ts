@@ -29,6 +29,6 @@ const blockinfoSchema: Schema<Blockinfo> = new Schema<Blockinfo>({
     type: String,
     required: true,
   },
-});
+},{ timestamps : true});
 
 export default mongoose.model<Blockinfo>("Block", blockinfoSchema);

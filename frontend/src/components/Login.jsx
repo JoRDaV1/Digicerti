@@ -18,6 +18,7 @@ import Data from "./Data";
 // import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { toast } from "react-toastify";
 
 const theme = createTheme({});
 
@@ -28,59 +29,68 @@ function Login() {
     const person = localStorage.getItem("person");
     if(person == "issuer"){
       navigate("/issuerdash");
-    
     }
     if(person == "user"){
       navigate("/userdash");
-  
     }  
-
   },[]);
 
    
 
   const [credentials, setCredentials] = useState({ email: "", password: "", person:""});
 
+
   const PostloginDetails = async (e) => {
-    const host = Data.URL;
-
     e.preventDefault();
-    const response = await fetch(
-      host + "/api/auth/loginuser",
-      {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const host = Data.URL;
+    console.log(credentials)
+    toast.promise(
+      // Promise-based function
+      async () => {
+        try {
+          const response = await fetch(host + "/api/auth/loginuser", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: credentials.email,
+              password: credentials.password,
+              person: credentials.person,
+            }),
+          });
+  
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+  
+          const json = await response.json();
+          
+          if (json.success) {
+            // Save the auth token and redirect
+            localStorage.setItem("token", json.authtoken);
+            if (credentials.person === "user") {
+              localStorage.setItem("person", "user");
+              navigate("/userdash");
+            } else if (credentials.person === "issuer") {
+              localStorage.setItem("person", "issuer");
+              navigate("/issuerdash");
+            }
+            return json; 
+            throw new Error("Invalid credentials");
+          }
+        } catch (error) {
+          throw new Error(error.message || 'An error occurred');
+        }
       },
-      body: JSON.stringify({
-        email: credentials.email,
-        password: credentials.password,
-        person: credentials.person,
-      }),
-    });
-    const json = await response.json();
-    console.log(json);
-    if (json.success) {
-      // Save the auth token and redirect
-      localStorage.setItem("token", json.authtoken);
-      if(credentials.person == "user"){
-        localStorage.setItem("person", "user")
-        navigate("/userdash");
-
+      {
+        pending: 'Logging in...',
+        success: 'Login successful!',
+        error: 'Login failed: Invalid credentials or network error',
       }
-      if(credentials.person == "issuer"){
-        localStorage.setItem("person", "issuer")
-
-        navigate("/issuerdash");
-
-      }
-
-      
-    } else {
-      alert("Invalid credentials");
-    }
-
+    );
   };
+  
 
 
   const onChange = (e) => {
@@ -185,8 +195,6 @@ function Login() {
       </Grid>
     </Grid>
   </ThemeProvider>
-  
-   
   );
 }
 

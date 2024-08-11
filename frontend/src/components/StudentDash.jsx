@@ -13,6 +13,7 @@ import C3 from "../photos/3.png";
 import C4 from "../photos/4.png";
 import C5 from "../photos/5.png";
 import C6 from "../photos/6.png";
+import "./StudentDash.css"
 import { createCertificate, addToBlock } from "./img-block";
 const qr = require("qr-image");
 
@@ -69,16 +70,6 @@ function AddCourse(props) {
     loadCourse(coursename);
   }, []);
 
-  const divideArrays = (arrays) => {
-    let subArrays = [];
-    for (let i = 0; i < arrays[0].length; i++) {
-      let subArray = [];
-      for (let j = 0; j < arrays.length; j++) {
-        subArray.push(arrays[j][i]);
-      }
-      subArrays.push(subArray);
-    }
-  };
 
   // for fetching the students for a particular course
 
@@ -203,6 +194,8 @@ function AddCourse(props) {
                       <th>Student name</th>
                       <th>StudentEmail</th>
                       <th>Grade</th>
+                      <th>View</th>
+
                     </tr>
                   </thead>
                   <tbody>
@@ -300,8 +293,6 @@ function AddCourse(props) {
                   ></input>
                   <br />
 
-                  <div className="row">
-                    <div className="column">
                       <button
                         type="submit"
                         className="btn btn-secondary"
@@ -309,8 +300,6 @@ function AddCourse(props) {
                       >
                         Submit
                       </button>
-                    </div>
-                  </div>
                 </form>
               )}
             </div>
@@ -320,7 +309,9 @@ function AddCourse(props) {
         </div>
       )}
 
-      {buttonPopup && <Popup2 />}
+      {buttonPopup && <div style={{maxHeight : "1100px"}}>
+        <Popup2 />
+        </div>}
     </>
   );
 }

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-
 import Login from "./Login"
 import SignUpIssuer from "./signupIssuer";
 import SignUpuser from "./signupuser";
@@ -11,9 +9,10 @@ import Coursedash from "./CourseDash";
 import PrivateRoutes from './Privateroutes'
 import Viewcertificate from "./Viewcertificate";
 import About from "./About";
+import ContactUs from "./Contact";
+import PrivacyPolicy from "./PrivacyPolicy";
+
 function Routerapp() {
-  
-  
   return (
     <div className="App">
         <Router>
@@ -22,15 +21,14 @@ function Routerapp() {
                 <Route element={<Issuerdash/>} path="/issuerdash" exact/>
                 <Route element={<Userdash/>} path="/userdash" exact/>
                 <Route element={<Coursedash/>} path="/course/:coursename" exact/> 
-
             </Route>
             <Route element={<About />} path="/about" exact/> 
-
+            <Route element={<ContactUs />} path="/contact" exact/> 
+            <Route element={<PrivacyPolicy />} path="/privacy-policy" exact/> 
         <Route  path="/" element = {<Login />}>  </Route>
         <Route  path="/Signupasissuer" element={<SignUpIssuer />} />
         <Route  path="/Signupasuser" element={<SignUpuser />} />
         <Route element={<Viewcertificate/>} path="/certificate/:certificateid" exact/>
-
           </Routes>
       </Router>
     </div>

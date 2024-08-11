@@ -29,7 +29,7 @@ router.get("/noofcourses", fetchissuer, async (req: Request, res: Response) => {
     res.send({ courses: course.length, students: students.length });
   } catch (error) {
     console.error(error);
-    res.status(500).send("Internal Server Error");
+    res.status(400).json({error})
   }
 });
 
@@ -42,7 +42,7 @@ router.get("/fetchcertificate", fetchcertificate, async (req, res) => {
     res.json(cdetails);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Internal Server Error");
+    res.status(400).json({error})
   }
 });
 
@@ -55,7 +55,7 @@ router.get("/fetchthecertificate", fetchcertificate, async (req, res) => {
     res.json(cdetails);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Internal Server Error");
+    res.status(400).json({error})
   }
 });
 
@@ -68,7 +68,7 @@ router.get("/fetchallusercertificates", fetchuser, async (req, res) => {
     res.json(course);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Internal Server Error");
+    res.status(400).json({error})
   }
 });
 
@@ -82,7 +82,7 @@ router.get("/fetchallissuercertificates", fetchissuer, async (req, res) => {
     res.json(certificate);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Internal Server Error");
+    res.status(400).json({error})
   }
 });
 
@@ -104,8 +104,8 @@ router.post(
       const issuer = await IssuerModel.findById(issuerId).select("-password");
       const issueremail = issuer?.email;
 
-      const { coursename, issuername, certificatetype } = req.body;
-
+      let { coursename, issuername, certificatetype } = req.body;
+      coursename = `${issuername}'S ${coursename} Course`
       // If there are errors, return Bad request and the errors
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -123,7 +123,7 @@ router.post(
       // res.json(savedcourse)
     } catch (error) {
       console.error(error);
-      res.status(500).send("Internal Server Error");
+      res.status(400).json({error})
     }
   }
 );

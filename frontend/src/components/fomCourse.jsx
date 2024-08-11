@@ -14,6 +14,7 @@ function AddCourse() {
   //popup
   const [buttonPopup, setButtonPopup] = useState(false);
   const [value, SetValue] = useState("");
+  const [selectedCertLink, setselectedCertLink] = useState("");
 
   let navigate = useNavigate();
 
@@ -94,6 +95,7 @@ function AddCourse() {
     setNote({ ...note, [e.target.name]: e.target.value });
   };
 
+
   return (
     <div className="col main pt-5 mt-3">
       <div className="row justify-content-center">
@@ -108,9 +110,12 @@ function AddCourse() {
                   <th>Course name</th>
                   <th>Instructorname</th>
                   <th>Certificate type</th>
+                  <th>View</th>
+
                 </tr>
               </thead>
               <tbody>
+                {courseArr ?  <>
                 {courseArr.map((output) => (
                   <tr>
                     {/* here we have render the number of courses  */}
@@ -128,6 +133,8 @@ function AddCourse() {
                     </td>
                   </tr>
                 ))}
+                </> : <p style={{textAlign : "center"}}> No Courses Found</p> }
+              
               </tbody>
             </table>
           </div>
@@ -168,13 +175,16 @@ function AddCourse() {
             ></input>
 
             <br />
+            {value &&  <img src={`${selectedCertLink}`} alt="Selected Cert"                           style={{ width: "100px", marginRight: "10px" }}
+ /> }
+           
             <button
               type="button"
               class="btn btn-primary"
               onClick={() => setButtonPopup(true)}
             >
               {" "}
-              Select Certificate
+              {value ? "Change Certificate" : "Select Certificate"}
             </button>
 
             <div className="row">
@@ -182,7 +192,7 @@ function AddCourse() {
                 <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
                   <div>
                     <div className="row">
-                      <div className="column" onClick={(e) => SetValue("C1")}>
+                      <div className="column" onClick={(e) =>{ SetValue("C1"); setselectedCertLink("https://i.ibb.co/9Y3FKf7/C1-5.png")}}>
                         <button
                           className="btn1"
                           onClick={() => setButtonPopup(false)}
@@ -194,7 +204,7 @@ function AddCourse() {
                           />
                         </button>
                       </div>
-                      <div className="column" onClick={(e) => SetValue("C2")}>
+                      <div className="column" onClick={(e) => {SetValue("C2"); setselectedCertLink("https://i.ibb.co/9Y3FKf7/C1-2.png")}}>
                         <button
                           className="btn1"
                           onClick={() => setButtonPopup(false)}
@@ -206,7 +216,7 @@ function AddCourse() {
                           />
                         </button>
                       </div>
-                      <div className="column" onClick={(e) => SetValue("C3")}>
+                      <div className="column" onClick={(e) => {SetValue("C3"); setselectedCertLink("https://i.ibb.co/9Y3FKf7/C1-3.png")}}>
                         <button
                           className="btn1"
                           onClick={() => setButtonPopup(false)}
@@ -220,7 +230,7 @@ function AddCourse() {
                       </div>
                     </div>
                     <div className="row">
-                      <div className="column" onClick={(e) => SetValue("C4")}>
+                      <div className="column" onClick={(e) => {SetValue("C4");  setselectedCertLink("https://i.ibb.co/9Y3FKf7/C1-4.png")}}>
                         <button
                           className="btn1"
                           onClick={() => setButtonPopup(false)}
@@ -232,7 +242,7 @@ function AddCourse() {
                           />
                         </button>
                       </div>
-                      <div className="column" onClick={(e) => SetValue("C5")}>
+                      <div className="column" onClick={(e) => {SetValue("C5");  setselectedCertLink("https://i.ibb.co/gZDzgbj/Green-and-Gold-Modern-Certificate-of-Completion-1.png")}}>
                         <button
                           className="btn1"
                           onClick={() => setButtonPopup(false)}
@@ -245,7 +255,7 @@ function AddCourse() {
                         </button>
                       </div>
 
-                      <div className="column" onClick={(e) => SetValue("C6")}>
+                      <div className="column" onClick={(e) => {SetValue("C6");  setselectedCertLink("https://i.ibb.co/9Y3FKf7/C1-1.png")}}>
                         <button
                           className="btn1"
                           onClick={() => setButtonPopup(false)}
@@ -261,15 +271,14 @@ function AddCourse() {
                   </div>
                 </Popup>
               </div>
-              <div className="column">
                 <button
                   type="submit"
                   className="btn btn-secondary"
+                  style={{marginRight : "30px"}}
                   onClick={handleClick}
                 >
                   Submit
                 </button>
-              </div>
             </div>
           </form>
         </div>

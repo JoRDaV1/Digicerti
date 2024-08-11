@@ -1,23 +1,33 @@
+.upload {
+  display: flex;
+  justify-content: center;
+  margin-right: 550px;
+}
+
 .upload button {
-    text-align: center;
-    display: inline-block;
-  padding: 10px 20px;
-  margin: 10px;
-  background-color: #979797;
-  color: white;
+  background-color: #007bff; /* Primary button color */
   border: none;
+  color: white;
+  padding: 10px 20px;
+  margin: 0 10px;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
-.upload button:active {
-    background-color: rgb(30, 30, 30);
-  }
 
-  
-  .upload button:focus {
-    outline: none;
-  }
-  
-  .upload button:not(:active):not(:focus) {
-    background-color: rgb(73, 72, 72);
-  }
+.upload button p {
+  margin: 0;
+}
+
+.upload button.active {
+  background-color: #28a745; /* Green for active button */
+}
+
+.upload button:hover {
+  transform: scale(0.98); /* Slightly reduce size on click */
+}
+
+.upload button:active {
+  transform: scale(0.98); /* Slightly reduce size on click */
+}

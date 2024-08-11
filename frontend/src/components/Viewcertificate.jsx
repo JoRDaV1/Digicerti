@@ -29,7 +29,7 @@ function Viewcertificate() {
       setCourseArr(completeCourseDetails);
     };
     loadCertificate(certificateid);
-  }, [courseArr]);
+  }, [setCourseArr]);
 
   const generatePDF = () => {
     const imgData = imgsrc; // replace with your base64 encoded image data

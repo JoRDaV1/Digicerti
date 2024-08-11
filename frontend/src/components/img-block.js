@@ -5,11 +5,6 @@ import { contractAddress, abi } from "./constants.js";
 import Data from "./Data";
 
 import C1 from "../photos/1.png";
-import C2 from "../photos/2.png";
-import C3 from "../photos/3.png";
-import C4 from "../photos/4.png";
-import C5 from "../photos/5.png";
-import C6 from "../photos/6.png";
 
 const qr = require("qr-image");
 let ind = 0;
@@ -46,9 +41,8 @@ const postblock = async (blockdetails, studentarr) => {
 
 async function addToBlock(setButtonPopup, savedcourse) {
   const provider = new ethers.providers.JsonRpcProvider(
-    "https://polygon-mumbai.g.alchemy.com/v2/PU-00iMyzujjZKf0k72eIFJ4a7zCHYUW"
+    "https://rpc.ankr.com/polygon_amoy/937419ceb1788de9512dd589b947d40de3a732b4bd2a22dce9a12eb744e08c20"
   );
-  console.log(Data.pvtkey);
   const signer = new ethers.Wallet(Data.pvtkey, provider);
 
   const contract = new ethers.Contract(contractAddress, abi, signer);
@@ -70,6 +64,8 @@ async function addToBlock(setButtonPopup, savedcourse) {
     );
   } catch (error) {
     console.log(error);
+    setButtonPopup(false)
+
   }
 }
 
@@ -84,7 +80,7 @@ async function addToBlockmulti(
   type
 ) {
   const provider = new ethers.providers.JsonRpcProvider(
-    "https://polygon-mumbai.g.alchemy.com/v2/PU-00iMyzujjZKf0k72eIFJ4a7zCHYUW"
+    "https://rpc.ankr.com/polygon_amoy/937419ceb1788de9512dd589b947d40de3a732b4bd2a22dce9a12eb744e08c20"
   );
   console.log(Data.pvtkey);
   const signer = new ethers.Wallet(Data.pvtkey, provider);
@@ -109,6 +105,7 @@ async function addToBlockmulti(
     );
   } catch (error) {
     console.log(error);
+    setButtonPopup(false)
   }
 }
 
@@ -126,7 +123,7 @@ function listenForTransactionMine(
     try {
       provider.once(transactionResponse.hash, (transactionReciept) => {
         ind += 1;
-
+        console.log(transactionReciept)
         console.log(ind, `Added to Blockchain`);
         if (ind === 2) {
           setButtonPopup(false);
@@ -136,6 +133,8 @@ function listenForTransactionMine(
       resolve();
     } catch (error) {
       console.log(error);
+      setButtonPopup(false)
+
     }
   });
 }

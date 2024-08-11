@@ -17,12 +17,13 @@ import { useNavigate } from "react-router-dom";
 import openeye from "./images/openeye.jpg"
 import closeeye from "./images/closeeye.jpg"
 import Data from "./Data";
+import { toast } from "react-toastify";
 const theme = createTheme();
 
 
 function SignUpUser() {
   
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [ FN, SetFN ] = useState("")
   const [ LN, SetLN ] = useState("")
   const [ ML, SetML ] = useState("")
@@ -30,46 +31,52 @@ function SignUpUser() {
   const [ PD, SetPD ] = useState("")
 
   async function postUserDetails(e) {
+    try{
+      let Userdetails = {
+        Firstname : FN,
+        Lastname: LN,
+        Mail : ML,
+        Mobilenumber : MN,
+        Password : PD,
+  
+      }
+      console.log(Userdetails)
+      e.preventDefault()
+   
+        const response = await fetch(host +"/api/auth/createuser", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            fname:FN,
+            lname:LN,
+            mobile:MN,
+            email: ML,
+          password: PD   
+          }),
+        });
+        const json = await response.json();
+      console.log(json);
+      if(json.error){
+        throw Error(json.error || "An Error Occured")
+      }
+      if (json.success) {
+        // Save the auth token and redirect
+        localStorage.setItem("token", json.authtoken);
+        navigate("/");
+      } else {
+        alert("Invalid credentials");
+      }
+      //save token of user
+      localStorage.setItem('auth-token', json.authtoken)
+      toast.success("SuccessFully Created Account Please Login", "success")
+      navigate('/');
+    }catch(e){
+      console.error(e)
+      toast.error("An Error Occured While Creating User")
+    }
     const host = Data.URL;
-
-    let Userdetails = {
-      Firstname : FN,
-      Lastname: LN,
-      Mail : ML,
-      Mobilenumber : MN,
-      Password : PD,
-
-    }
-		console.log(Userdetails)
-		e.preventDefault()
- 
-      const response = await fetch(host +"/api/auth/createuser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          fname:FN,
-          lname:LN,
-          mobile:MN,
-          email: ML,
-        password: PD   
-        }),
-      });
-      const json = await response.json();
-    console.log(json);
-    if (json.success) {
-      // Save the auth token and redirect
-      localStorage.setItem("token", json.authtoken);
-      navigate("/");
-      
-    } else {
-      alert("Invalid credentials");
-    }
-    //save token of user
-    localStorage.setItem('auth-token', json.authtoken)
-    navigate('/');
-    alert("SuccessFully Created Account Please Login", "success")
   }
 
   const [showPassword, setShowPassword] = useState(false);

@@ -10,10 +10,7 @@ const Sidebar = () => {
   const [courses, setcourses] = useState("");
   const [students, setstudents] = useState("");
 
-
-
   useEffect(() => {
-
     const getissuer = async() => {
       const response = await fetch(
         `${host}/api/auth/getissuer`,
@@ -75,14 +72,23 @@ const Sidebar = () => {
           <div className="card bg-secondary text-white h-100">
             <div
               className="card-body bg-secondary"
-              style={{ backgroundColor: "#E7E7E7" }}
+              style={{ backgroundColor: "#E7E7E7", textAlign:"center" }}
             >
-              <h5 style={{fontWeight:"100"}}> {courses} - Courses</h5>
-              <h5 style={{fontWeight:"100"}}>{students} - Students</h5>
+              <h5 style={{fontWeight:"100", color : "white"}}> {courses} - Courses</h5>
+              <h5 style={{fontWeight:"100", color : "white"}}>{students} - Students</h5>
             </div>
           </div>
         </li>
-
+        <li >
+      <a className="nav-link text-dark" href="#">
+        <h6  style={{ textAlign : "center", marginTop:"10px" }}>Courses</h6>
+      </a>
+    </li>
+        <li >
+      <a className="nav-link text-dark" href="#">
+        <h6 style={{ textAlign : "center" }} >Students</h6>
+      </a>
+    </li>
       </ul>
     </div>
   );

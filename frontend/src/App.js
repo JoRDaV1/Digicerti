@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Roter from "./components/Roter";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 function App() {
   
   return (
+    <>
+      <ToastContainer />
       <Roter />
- 
+    </>
   );
 }
 

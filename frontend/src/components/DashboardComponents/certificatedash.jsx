@@ -49,9 +49,9 @@ useEffect(() => {
 
   blockdetails.map((blockdetails) => {
 
-    settransurl("https://mumbai.polygonscan.com/tx/" + blockdetails.transhash) ;
-    setfromurl("https://mumbai.polygonscan.com/address/" + blockdetails.from)  ;
-settourl ( "https://mumbai.polygonscan.com/address/" + blockdetails.to) ;
+    settransurl("https://www.oklink.com/amoy/tx/" + blockdetails.transhash) ;
+    setfromurl("https://www.oklink.com/amoy/address/" + blockdetails.from)  ;
+settourl ( "https://www.oklink.com/amoy/address/" + blockdetails.to) ;
   })
 
 }, [blockdetails])
@@ -81,7 +81,7 @@ settourl ( "https://mumbai.polygonscan.com/address/" + blockdetails.to) ;
     async function verifyCertificate(savedcourse) {
 
       const provider = new ethers.providers.JsonRpcProvider(
-        "https://polygon-mumbai.g.alchemy.com/v2/PU-00iMyzujjZKf0k72eIFJ4a7zCHYUW"
+        "https://rpc.ankr.com/polygon_amoy/937419ceb1788de9512dd589b947d40de3a732b4bd2a22dce9a12eb744e08c20"
       );
       const contract = new ethers.Contract(contractAddress, abi, provider);
       const id = savedcourse._id;
@@ -114,8 +114,8 @@ settourl ( "https://mumbai.polygonscan.com/address/" + blockdetails.to) ;
     }
 
   const customstyle = {
-    width: "90%",
-    height: "700px",
+    width: "80%",
+    height: "500px",
     marginLeft: "80px",
   };
   const [buttonPopup, setButtonPopup] = useState(false);
@@ -142,86 +142,100 @@ settourl ( "https://mumbai.polygonscan.com/address/" + blockdetails.to) ;
     </button>
     <strong>Data and Records</strong> Learn more about employee
   </div>
-  <div className="row mb-3">
-    <div className="col-xl-8 col-sm-6 py-2">
-      <img style={customstyle} src={imgsrc}></img>
-    </div>
-    <div className="col-xl-3 col-sm-6 py-2" style={{ marginTop: "20%" , height: "50%", width:"  "}}>
-      <div
-        className="text-right card text-black bg-white h-100"
-        style={{ padding: "10px" }}
+  <div className="row">
+  <div className="col py-2">
+    <img style={customstyle} src={imgsrc} alt="Certificate" />
+  </div>
+  <div className="col py-2"   style={{
+          fontSize: "30px",
+          maxWidth:"40%",
+          maxHeight: "250px",
+          marginTop: "150px",
+
+        }}>
+    <div
+      className="text-center card text-black bg-white h-100"
+      style={{ padding: "10px" }}
+    >
+      <h2
+        style={{
+          fontSize: "30px",
+          marginBottom: "30px",
+        }}
       >
-        {/* add a line break */}
-        {/* <br /> */}
-        <h2
-          style={{
-            textAlign: "center",
-            fontSize: "30px",
-            marginBottom: "30px",
-          }}
-        >
-          Credential Verification
-        </h2>
-        <p style={{ textAlign: "center", fontSize: "20px" }}>
-          This Certificate now Legitimately belongs to this person{" "}
-        </p>
-        <p style={{ textAlign: "center", fontSize: "20px" }}>
-          {" "}
-          Now, Verify the credentials with Blockchain Transaction
-        </p>
-        <button
-          type="button"
-          class="btn btn-primary btn-lg"
-          onClick={() => setButtonPopup(true)}
-        >
-          {" "}
-          Verify & Validate{" "}
-        </button>
-        <Popup trigger={buttonPopup} setTrigger={setButtonPopup} style={{marginLeft:"10px"}} >
-        <div class="verification-container">
-    {response ? <div><h1 class="verification-header" style={{color:"green"}}>Verification Successful</h1> <img src={success} alt="Success Icon" class="verification-icon"/>   <p class="verification-message">Your account has been successfully verified!</p>
-</div> : <h1 style={{color:"red"}} class="verification-header">Verification Failed</h1>}
-    
-</div>
-{blockdetails.map((blockdetail) => (
-  <div id="transaction-box">
-  <h2>Transaction Details</h2>
-  <table id="transaction-table">
-  <tr>
-      <th>Chain Id</th>
-      <td id="date">{blockdetail.chainId}</td>
-    </tr>
-    <tr>
-    <th>Transaction Hash</th>
-
-      <a href={transurl} target="_blank">
-      <td id="date">{blockdetail.transhash}</td>
-      </a>
-      
-    </tr>
-    <tr>
-      <th>from</th>
-      <a href={fromurl} target="_blank">
-      <td id="amount">{blockdetail.from}</td>
-
-      </a>
-    </tr>
-    <tr>
-      <th>to</th>
-      <a href={tourl} target="_blank">
-      <td id="type">{blockdetail.to}</td>
-
-      </a>
-    </tr>
-  </table>
-</div>
-
-  ))}
-
-        </Popup>
-      </div>
+        Credential Verification
+      </h2>
+      <p style={{ fontSize: "20px" }}>
+        This Certificate now Legitimately belongs to this person
+      </p>
+      <p style={{ fontSize: "20px" }}>
+        Now, Verify the credentials with Blockchain Transaction
+      </p>
+      <button
+        type="button"
+        className="btn btn-primary btn-lg"
+        onClick={() => setButtonPopup(true)}
+      >
+        Verify & Validate
+      </button>
+      <Popup trigger={buttonPopup} setTrigger={setButtonPopup} style={{ marginLeft: "10px" }}>
+        <div className="verification-container">
+          {response ? (
+            <div>
+              <h1 className="verification-header" style={{ color: "green" }}>
+                Verification Successful
+              </h1>
+              <img src={success} alt="Success Icon" className="verification-icon" />
+              <p className="verification-message">Your account has been successfully verified!</p>
+            </div>
+          ) : (
+            <h1 className="verification-header" style={{ color: "red" }}>
+              Verification Failed
+            </h1>
+          )}
+          {blockdetails.map((blockdetail, index) => (
+            <div key={index} id="transaction-box">
+              <h2>Transaction Details</h2>
+              <table id="transaction-table">
+                <tbody>
+                  <tr>
+                    <th>Chain Id</th>
+                    <td id="date">{blockdetail.chainId}</td>
+                  </tr>
+                  <tr>
+                    <th>Transaction Hash</th>
+                    <td id="date">
+                      <a href={transurl} target="_blank" rel="noopener noreferrer">
+                        {blockdetail.transhash}
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>From</th>
+                    <td id="amount">
+                      <a href={fromurl} target="_blank" rel="noopener noreferrer">
+                        {blockdetail.from}
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>To</th>
+                    <td id="type">
+                      <a href={tourl} target="_blank" rel="noopener noreferrer">
+                        {blockdetail.to}
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          ))}
+        </div>
+      </Popup>
     </div>
   </div>
+</div>
+
   <hr />
 </div>
  

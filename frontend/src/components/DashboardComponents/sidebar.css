@@ -1,0 +1,38 @@
+/* General sidebar styling */
+#sidebar {
+    border-right: 1px solid #dee2e6;
+    padding: 20px;
+  }
+  
+  /* Sidebar link styling */
+  .nav-link {
+    display: block;
+    color: #343a40;
+    text-decoration: none;
+  }
+  
+  .nav-link:hover {
+    background-color: #e9ecef;
+    border-radius: 4px;
+    color: #007bff;
+  }
+  
+  /* Card styling */
+  .card {
+    border-radius: 8px;
+    border: none;
+  }
+  
+  .card-body {
+    padding: 15px;
+  }
+  
+  .card h5 {
+    margin-bottom: 0;
+  }
+  
+  /* Additional content styling */
+  h6 {
+    margin-bottom: 10px;
+  }
+  

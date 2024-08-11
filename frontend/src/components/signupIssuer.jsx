@@ -14,6 +14,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import Data from "./Data";
+import { toast } from "react-toastify";
 
 const theme = createTheme();
 
@@ -28,33 +29,39 @@ function SignUpIssuer() {
   const [PD, SetPD] = useState("");
 
   async function postissuerdetails(e) {
-    let Userdetails = {
-      Companyname: CN,
-      Mail: ML,
-      Mobilenumber: MN,
-      Password: PD,
-    };
-    console.log(Userdetails);
-    e.preventDefault();
+    try{
 
-    const response = await fetch(host + "/api/auth/createissuer", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: CN,
-        mobile: MN,
-        email: ML,
-        password: PD,
-      }),
-    });
-    const json = await response.json();
-    console.log(json);
-    //save token of user
-    localStorage.setItem("auth-token", json.authtoken);
-    navigate("/");
-    alert("SuccessFully Created Account Please Login", "success");
+      let Userdetails = {
+        Companyname: CN,
+        Mail: ML,
+        Mobilenumber: MN,
+        Password: PD,
+      };
+      console.log(Userdetails);
+      e.preventDefault();
+  
+      const response = await fetch(host + "/api/auth/createissuer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: CN,
+          mobile: MN,
+          email: ML,
+          password: PD,
+        }),
+      });
+      const json = await response.json();
+      if(json.error){
+        throw Error(json.error || "An Error Occured")
+      }
+      localStorage.setItem("auth-token", json.authtoken);
+      toast.success("SuccessFully Created Account Please Login", "success");
+      navigate("/");
+    }catch(e){
+      toast.error(e || "An Error Occured While Creating Issuer")
+    }
   }
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {

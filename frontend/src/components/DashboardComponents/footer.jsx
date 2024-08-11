@@ -1,69 +1,22 @@
 import React from "react";
 
 function Footer() {
-  const d = new Date();
-  let year = d.getFullYear();
+  const year = new Date().getFullYear();
+
   return (
-    <div className="bg-secondary">
-<footer>
-<br />
-
-      <ul style={{listStyleType:"none"}} className="list-inline text-center">
-
-     
-
-        <section >
-        <div class="container">
-  <div class="row">
-    <div class="col-sm">
-    </div>
-    <div class="col-sm">
-    <p className="cpwright" style={{color:"#ffff", marginLeft:"20px"}}>
-        
-        Tools and Technologies Used:
-      </p>
-    <p className="svw">
-    <ul style={{listStyleType:"none"}} className="ul">
-    <li>
-<a href="www.figma.com">   Figma</a> 
-</li>
-<li>
-<a href="www.react.com">   React</a> 
-</li>
-<li>
-<a href="www.figma.com">   NodeJS and ExpressJS</a> 
-</li>
-<li>
-<a href="www.figma.com"> MongoDB</a> 
-</li>
-<li>
-<a href="www.figma.com"> Ethereum Testnet</a> 
-</li>
-    </ul>
-  
-
-          </p>    </div>
-    <div class="col-sm">
-    </div>
-  </div>
-</div>
-
-
-        </section>
-      </ul>
-      <p className="bg-light cpwright text-center">
-      <br />
-&copy; DigiCerti {year}
-<br />
-<br />
-
-</p>
-
+    <footer style={{ backgroundColor: "#343a40", color: "#ffffff", padding: "20px 0" }}>
+      <div className="container text-center">
+        <p style={{ margin: "0 0 10px" }}>DigiCerti</p>
+        <p style={{ margin: "0 0 10px" }}>
+          <a href="/about" style={{ color: "#ffffff", textDecoration: "none" }}>About Us</a> | 
+          <a href="/contact" style={{ color: "#ffffff", textDecoration: "none", marginLeft: "10px" }}>Contact</a> | 
+          <a href="/privacy-policy" style={{ color: "#ffffff", textDecoration: "none", marginLeft: "10px" }}>Privacy Policy</a>
+        </p>
+        <p style={{ marginTop: "20px", marginBottom: "0" }}>
+          &copy; {year} DigiCerti. All rights reserved.
+        </p>
+      </div>
     </footer>
-
-
-    </div>
-    
   );
 }
 
