@@ -80,7 +80,7 @@ const Sidebar = () => {
           </div>
         </li>
         <li >
-      <a className="nav-link text-dark" href="#">
+      <a className="nav-link text-dark" href="/issuerdash">
         <h6  style={{ textAlign : "center", marginTop:"10px" }}>Courses</h6>
       </a>
     </li>
