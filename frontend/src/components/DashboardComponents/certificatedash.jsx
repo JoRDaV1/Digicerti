@@ -9,6 +9,7 @@ import LoadingSpinner from "./LoadingSpinner"
 import { useParams } from "react-router-dom";
 import "./verification.css";
 import success from "../images/success.jpg";
+import { toast } from 'react-toastify';
 
 const Dashboard = () => {
   const [blockdetails, setblockdetails] = useState([]);
@@ -92,22 +93,31 @@ settourl ( "https://www.oklink.com/amoy/address/" + blockdetails.to) ;
       console.log(id, issuedTo, issuedBy, course, issuedOn);
 
       try {
-        const transactionResponse = await contract.verifyCertificate(
-          id,
-          issuedTo,
-          issuedBy,
-          course,
-          issuedOn
+        toast.promise(
+          async () => {
+            const transactionResponse = await contract.verifyCertificate(
+              id,
+              issuedTo,
+              issuedBy,
+              course,
+              issuedOn
+            );
+            
+            if (transactionResponse) {
+              setResponse(true);
+              setClass(customclass1);
+              return 'Verification Successful'; 
+            } else {
+              setResponse(false);
+              setClass(false);
+              throw new Error('Verification Failed'); 
+            }
+          },
+          {
+            success: 'Verification Successful!',
+            error: 'Verification Failed. Please try again.',
+          }
         );
-        if (transactionResponse) {
-          setResponse(true);
-          setClass(customclass1)
-          
-        }
-        else{
-          setResponse(false);
-          setClass(false)
-        }
       } catch (error) {
         console.log(error);
       }
@@ -186,7 +196,7 @@ settourl ( "https://www.oklink.com/amoy/address/" + blockdetails.to) ;
                 Verification Successful
               </h1>
               <img src={success} alt="Success Icon" className="verification-icon" />
-              <p className="verification-message">Your account has been successfully verified!</p>
+              <p className="verification-message">Your certificate has been successfully verified with the data</p>
             </div>
           ) : (
             <h1 className="verification-header" style={{ color: "red" }}>
@@ -206,7 +216,7 @@ settourl ( "https://www.oklink.com/amoy/address/" + blockdetails.to) ;
                     <th>Transaction Hash</th>
                     <td id="date">
                       <a href={transurl} target="_blank" rel="noopener noreferrer">
-                        {blockdetail.transhash}
+                        {blockdetail.transhash.substring(0,20) + "..."}
                       </a>
                     </td>
                   </tr>
@@ -214,7 +224,7 @@ settourl ( "https://www.oklink.com/amoy/address/" + blockdetails.to) ;
                     <th>From</th>
                     <td id="amount">
                       <a href={fromurl} target="_blank" rel="noopener noreferrer">
-                        {blockdetail.from}
+                        {blockdetail.from.substring(0,20) + "..."}
                       </a>
                     </td>
                   </tr>
@@ -222,7 +232,7 @@ settourl ( "https://www.oklink.com/amoy/address/" + blockdetails.to) ;
                     <th>To</th>
                     <td id="type">
                       <a href={tourl} target="_blank" rel="noopener noreferrer">
-                        {blockdetail.to}
+                        {blockdetail.to.substring(0,20) + "..."}
                       </a>
                     </td>
                   </tr>

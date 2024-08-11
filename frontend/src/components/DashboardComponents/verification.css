@@ -77,3 +77,55 @@
     padding: 10px;
   }
   
+  /* Add this to your CSS file */
+.verification-container {
+  max-width: 600px; /* Set a max-width for better readability */
+  margin: 0 auto; /* Center the container */
+  padding: 20px; /* Add some padding */
+  font-family: Arial, sans-serif; /* Use a cleaner font */
+}
+
+.verification-header {
+  font-size: 1.5rem; /* Adjust font size */
+  margin-bottom: 10px; /* Add space below header */
+}
+
+.verification-icon {
+  width: 40px; /* Adjust icon size */
+  height: 40px; /* Adjust icon size */
+  display: block; /* Ensure the icon is centered */
+  margin: 10px auto; /* Center the icon */
+}
+
+.verification-message {
+  font-size: 1rem; /* Adjust font size */
+  margin: 10px 0; /* Add space around the message */
+}
+
+#transaction-box {
+  margin-top: 20px; /* Add space between transaction details and verification message */
+}
+
+#transaction-table {
+  width: 100%; /* Ensure table takes full width of the box */
+  border-collapse: collapse; /* Remove space between table cells */
+}
+
+#transaction-table th, #transaction-table td {
+  padding: 8px; /* Add padding inside table cells */
+  font-size: 0.9rem; /* Adjust font size */
+}
+
+#transaction-table th {
+  text-align: left; /* Align headers to the left */
+  font-weight: bold; /* Make headers bold */
+}
+
+#transaction-table a {
+  color: #007bff; /* Set link color */
+  text-decoration: none; /* Remove underline from links */
+}
+
+#transaction-table a:hover {
+  text-decoration: underline; /* Add underline on hover */
+}
