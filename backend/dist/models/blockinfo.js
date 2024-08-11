@@ -45,5 +45,5 @@ const blockinfoSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
-});
+}, { timestamps: true });
 exports.default = mongoose_1.default.model("Block", blockinfoSchema);

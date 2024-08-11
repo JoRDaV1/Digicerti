@@ -30,7 +30,7 @@ router.get("/noofcourses", fetchissuer_1.default, async (req, res) => {
     }
     catch (error) {
         console.error(error);
-        res.status(500).send("Internal Server Error");
+        res.status(400).json({ error });
     }
 });
 router.get("/fetchcertificate", fetchcertificate_1.default, async (req, res) => {
@@ -42,7 +42,7 @@ router.get("/fetchcertificate", fetchcertificate_1.default, async (req, res) => 
     }
     catch (error) {
         console.error(error);
-        res.status(500).send("Internal Server Error");
+        res.status(400).json({ error });
     }
 });
 router.get("/fetchthecertificate", fetchcertificate_1.default, async (req, res) => {
@@ -54,7 +54,7 @@ router.get("/fetchthecertificate", fetchcertificate_1.default, async (req, res) 
     }
     catch (error) {
         console.error(error);
-        res.status(500).send("Internal Server Error");
+        res.status(400).json({ error });
     }
 });
 router.get("/fetchallusercertificates", fetchuser_1.default, async (req, res) => {
@@ -66,7 +66,7 @@ router.get("/fetchallusercertificates", fetchuser_1.default, async (req, res) =>
     }
     catch (error) {
         console.error(error);
-        res.status(500).send("Internal Server Error");
+        res.status(400).json({ error });
     }
 });
 router.get("/fetchallissuercertificates", fetchissuer_1.default, async (req, res) => {
@@ -80,7 +80,7 @@ router.get("/fetchallissuercertificates", fetchissuer_1.default, async (req, res
     }
     catch (error) {
         console.error(error);
-        res.status(500).send("Internal Server Error");
+        res.status(400).json({ error });
     }
 });
 router.post("/addcertificate", fetchissuer_1.default, [
@@ -96,7 +96,8 @@ router.post("/addcertificate", fetchissuer_1.default, [
         const issuerId = req.issuer?.id;
         const issuer = await issuer_1.default.findById(issuerId).select("-password");
         const issueremail = issuer?.email;
-        const { coursename, issuername, certificatetype } = req.body;
+        let { coursename, issuername, certificatetype } = req.body;
+        coursename = `${issuername}'S ${coursename} Course`;
         // If there are errors, return Bad request and the errors
         const errors = (0, express_validator_1.validationResult)(req);
         if (!errors.isEmpty()) {
@@ -114,7 +115,7 @@ router.post("/addcertificate", fetchissuer_1.default, [
     }
     catch (error) {
         console.error(error);
-        res.status(500).send("Internal Server Error");
+        res.status(400).json({ error });
     }
 });
 exports.default = router;
